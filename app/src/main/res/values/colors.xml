@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="color_80ffffff">#80FFFFFF</color>
+    <color name="color_e0dddd">#E0DDDD</color>
+    <color name="color_ffffff">#ffffff</color>
+
+    <!--Home Screen-->
+    <color name="textTablayout">@color/color_80ffffff</color>
+    <color name="textSelectedTablayout">@color/color_ffffff</color>
+    <color name="indicatorTablayout">@color/color_e0dddd</color>
+    <color name="textName">@color/color_ffffff</color>
+    <color name="textTime">@color/color_80ffffff</color>
+</resources>

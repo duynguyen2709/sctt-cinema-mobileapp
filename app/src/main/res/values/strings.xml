@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CGV</string>
+    <string name="movies">Movies</string>
+    <string name="now_showing">Now Showing</string>
+    <string name="cinema">Cinema</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="imds">IMDS</string>
+    <string name="rotten_tomato">Rotten Tomato</string>
+    <string name="metacritic">Metacritic</string>
+    <string name="buy_tickets">Buy Tickets</string>
+    <string name="title_activity_ticket_by_theater">TicketByTheater</string>
+</resources>
