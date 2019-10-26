@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CGV</string>
+    <string name="movies">Phim</string>
+    <string name="now_showing">Đang chiếu</string>
+    <string name="cinema">Phim</string>
+    <string name="coming_soon">Sắp chiếu</string>
+    <string name="imds">IMDS</string>
+    <string name="rotten_tomato">Rotten Tomato</string>
+    <string name="metacritic">Metacritic</string>
+    <string name="buy_tickets">Buy Tickets</string>
+</resources>

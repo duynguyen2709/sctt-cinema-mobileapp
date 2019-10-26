@@ -1,0 +1,2 @@
+include ':app', ':cardslider', ':lib'
+rootProject.name='CGV'
