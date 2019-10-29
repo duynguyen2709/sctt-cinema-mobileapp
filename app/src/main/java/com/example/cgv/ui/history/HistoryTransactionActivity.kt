@@ -30,6 +30,10 @@ class HistoryTransactionActivity : BaseActivity<ActivityHistoryTransactionsBindi
     override fun bindView() {
         super.bindView()
         viewBinding.activity=this
+        viewBinding.swipeContainer.isRefreshing=true
+        viewBinding.swipeContainer.setOnRefreshListener {
+            viewModel.getListHistory(CoreApplication.instance.user?.email?:"")
+        }
         adapter= HistoryTransactionAdapter(this::clickEvent)
         viewBinding.rvHistoryTransaction.adapter=adapter
         viewBinding.rvHistoryTransaction.layoutManager= LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
@@ -53,6 +57,7 @@ class HistoryTransactionActivity : BaseActivity<ActivityHistoryTransactionsBindi
             when (it?.status) {
                 Resource.SUCCESS -> {
                     it.data?.let { response ->
+                        viewBinding.swipeContainer.isRefreshing=false
                         adapter.addData(ArrayList(response))
                     }
                 }
