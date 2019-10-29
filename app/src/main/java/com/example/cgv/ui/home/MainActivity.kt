@@ -21,6 +21,7 @@ import com.example.cgv.model.HomeInfo
 import com.example.cgv.model.Movie
 import com.example.cgv.model.Resource
 import com.example.cgv.ui.detail.DetailActivity
+import com.example.cgv.ui.history.HistoryTransactionActivity
 import com.example.cgv.ui.login.LogInActivity
 import com.example.cgv.ui.signup.SignUpActivity
 import com.example.cgv.viewmodel.HomeViewModel
@@ -124,6 +125,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        btnHistory.setOnClickListener {
+            val intent = Intent(this, HistoryTransactionActivity::class.java)
+            startActivity(intent)
+        }
         layoutDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         changeInfo(adapter.getItem(10000 / 2))

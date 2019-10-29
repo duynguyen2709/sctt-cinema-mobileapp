@@ -7,7 +7,7 @@ data class Ticket(
     val roomNumber: String,
     val seatCodes: String,
     val theaterName: String,
-    val ticketID: Int,
+    val ticketID: Long,
     val time: String,
     val totalPrice: Int
 )

@@ -23,4 +23,7 @@
     <string name="password_digit">%s must be at least 1 digit</string>
     <string name="log_in">LOG IN</string>
     <string name="welcome_back">Welcome Back,</string>
+    <string name="booking_code">Booking Code:</string>
+    <string name="history_transaction">History Transaction</string>
+    <string name="manage_all_your_movie_ticket_bookings">Manage all your movie ticket bookings</string>
 </resources>

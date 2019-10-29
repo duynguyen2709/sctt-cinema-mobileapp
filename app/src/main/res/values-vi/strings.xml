@@ -22,4 +22,8 @@
     <string name="password_upper_case">%s chứa ít nhất 1 kí tự in hoa</string>
     <string name="password_digit">%s chứa ít nhất một chữ số</string>
     <string name="log_in">Đăng nhập</string>
+    <string name="welcome_back">Chào mừng trở lại,</string>
+    <string name="booking_code">Mã booking:</string>
+    <string name="history_transaction">Lịch sử giao dịch</string>
+    <string name="manage_all_your_movie_ticket_bookings">Tất cả các giao dịch mua vé của bạn</string>
 </resources>

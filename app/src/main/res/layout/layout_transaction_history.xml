@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ticket"
+            type="com.example.cgv.model.Ticket" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#00FFFFFF"
+        android:padding="4dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/background_ticket_item" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tvMovieName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvMovieName" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMovieName"
+                style="@style/normal_text.bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="40dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingEnd="32dp"
+                android:singleLine="true"
+                android:text="@{ticket.movieName}"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Joker" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTheater"
+                style="@style/normal_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:paddingEnd="16dp"
+                android:text="@{ticket.theaterName}"
+                android:textColor="#BBB9B9"
+                app:layout_constraintTop_toBottomOf="@id/tvMovieName"
+                tools:text="7th July • 10:30PM • Elite Premium" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                style="@style/normal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@{ticket.date+` • `+ticket.time}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTheater"
+                tools:text="C1, C2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPrice"
+                style="@style/normal_text.bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:textSize="18sp"
+                bindPrice="@{ticket.totalPrice}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTheater"
+                tools:text="200,000 đ" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvBookingCode"
+                style="@style/normal_text.bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{Long.toString(ticket.ticketID)}"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="1910290001" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/normal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/booking_code"
+                android:textColor="#BBB9B9"
+                app:layout_constraintEnd_toStartOf="@id/tvBookingCode"
+                app:layout_constraintTop_toTopOf="@id/tvBookingCode" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

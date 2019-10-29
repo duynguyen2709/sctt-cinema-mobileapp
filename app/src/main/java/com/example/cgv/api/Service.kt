@@ -18,5 +18,5 @@ interface Service {
     fun postLogin(@Body param: LoginParam):Observable<Response<AuthenticationResponse>>
 
     @GET("client/private/history/{email}")
-    fun getHistoryTransaction(@Path("email") email:String)
+    fun getHistoryTransaction(@Path("email") email:String) :Observable<Response<List<Ticket>>>
 }
