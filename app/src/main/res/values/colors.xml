@@ -13,4 +13,5 @@
     <color name="indicatorTablayout">@color/color_e0dddd</color>
     <color name="textName">@color/color_ffffff</color>
     <color name="textTime">@color/color_80ffffff</color>
+    <color name="white">#ffffff</color>
 </resources>

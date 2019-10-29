@@ -21,6 +21,9 @@ import com.example.cgv.model.HomeInfo
 import com.example.cgv.model.Movie
 import com.example.cgv.model.Resource
 import com.example.cgv.ui.detail.DetailActivity
+import com.example.cgv.ui.login.LogInActivity
+import com.example.cgv.ui.signup.SignUpActivity
+import com.example.cgv.viewmodel.HomeViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
@@ -43,8 +46,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        viewModel.homeInfoLiveData.observe(this, object : Observer<Resource<HomeInfo>> {
-            override fun onChanged(t: Resource<HomeInfo>?) {
+        viewModel.homeInfoLiveData.observe(this,
+            Observer<Resource<HomeInfo>> { t ->
                 when (t?.status) {
                     Resource.SUCCESS -> {
                         t.data?.let {
@@ -59,9 +62,7 @@ class MainActivity : AppCompatActivity() {
 
                     }
                 }
-            }
-
-        })
+            })
         listNowMovie.observe(this, object : Observer<List<Movie>> {
             override fun onChanged(t: List<Movie>?) {
                 if (tlHome.selectedTabPosition == 0) {
@@ -110,6 +111,16 @@ class MainActivity : AppCompatActivity() {
 
         btnTheater.setOnClickListener {
             val intent = Intent(this, TicketByTheater::class.java)
+            startActivity(intent)
+        }
+
+        btnSignUp.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnLogin.setOnClickListener {
+            val intent = Intent(this, LogInActivity::class.java)
             startActivity(intent)
         }
 

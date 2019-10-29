@@ -9,4 +9,17 @@
     <string name="rotten_tomato">Rotten Tomato</string>
     <string name="metacritic">Metacritic</string>
     <string name="buy_tickets">Buy Tickets</string>
+    <string name="email_address">Email</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="create_account">TẠO TÀI KHOẢN</string>
+    <string name="password">Mật khẩu</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="full_name">Họ tên</string>
+    <string name="create_an_account_to_access_all_features">Tạo tài khoản để trải nghiệm mọi tính năng.</string>
+    <string name="error_empty">%s không thể rỗng</string>
+    <string name="invalid_email">Email không hợp lệ</string>
+    <string name="password_size">%s chứa ít nhất 8 kí tự</string>
+    <string name="password_upper_case">%s chứa ít nhất 1 kí tự in hoa</string>
+    <string name="password_digit">%s chứa ít nhất một chữ số</string>
+    <string name="log_in">Đăng nhập</string>
 </resources>

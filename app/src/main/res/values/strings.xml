@@ -9,4 +9,18 @@
     <string name="metacritic">Metacritic</string>
     <string name="buy_tickets">Buy Tickets</string>
     <string name="title_activity_ticket_by_theater">TicketByTheater</string>
+    <string name="email_address">Email Address</string>
+    <string name="sign_up">Sign up</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="password">Password</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full Name</string>
+    <string name="create_an_account_to_access_all_features">Create an account to access all features</string>
+    <string name="error_empty">%s can\'t be empty</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="password_size">%s must be at least 8 characters</string>
+    <string name="password_upper_case">%s must be at least 1 Uppercase character</string>
+    <string name="password_digit">%s must be at least 1 digit</string>
+    <string name="log_in">LOG IN</string>
+    <string name="welcome_back">Welcome Back,</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.cgv.ui.home
+package com.example.cgv.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.cgv.model.Resource
