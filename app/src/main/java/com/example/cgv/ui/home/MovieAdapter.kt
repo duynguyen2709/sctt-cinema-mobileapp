@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_card_content.view.*
 
 class MovieAdapter : CardSliderAdapter<Movie>() {
 
-    var listener: PagerAdapterListener? = null
+    private var listener: PagerAdapterListener? = null
 
     override fun bindView(position: Int, itemContentView: View, item: Movie?) {
 
@@ -27,11 +27,11 @@ class MovieAdapter : CardSliderAdapter<Movie>() {
 
     override fun getItemContentLayout(position: Int) = R.layout.item_card_content
 
-    fun setPagerAdapterListener(listener: PagerAdapterListener){
+    fun setPagerAdapterListener(listener: PagerAdapterListener) {
         this.listener = listener
     }
 
-    interface PagerAdapterListener{
+    interface PagerAdapterListener {
         fun onClick(movie: Movie)
     }
 }
