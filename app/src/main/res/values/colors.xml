@@ -6,6 +6,7 @@
     <color name="color_80ffffff">#80FFFFFF</color>
     <color name="color_e0dddd">#E0DDDD</color>
     <color name="color_ffffff">#ffffff</color>
+    <color name="color_000000">#000000</color>
 
     <!--Home Screen-->
     <color name="textTablayout">@color/color_80ffffff</color>
@@ -14,4 +15,7 @@
     <color name="textName">@color/color_ffffff</color>
     <color name="textTime">@color/color_80ffffff</color>
     <color name="white">#ffffff</color>
+
+    <!--Ticket Screen-->
+    <color name="textDayText">@color/color_000000</color>
 </resources>

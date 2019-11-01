@@ -1,6 +1,7 @@
 package com.example.cgv.ui.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -11,16 +12,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.example.cgv.R
 import com.example.cgv.model.Movie
+import com.example.cgv.ui.ticket.TicketActivity
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_second.*
+import java.io.Serializable
 
 
 class DetailActivity : YouTubeBaseActivity() {
-    lateinit var movie: Movie
-    lateinit var adapter: ScreenshotAdapter
+    private lateinit var movie: Movie
+
+    private lateinit var adapter: ScreenshotAdapter
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +46,8 @@ class DetailActivity : YouTubeBaseActivity() {
         tvTitle.text = movie.movieName
         tvType.text = movie.category + " - " + movie.timeInMinute
         tvContent.text = movie.description
-        rvScreenshot.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        rvScreenshot.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvScreenshot.adapter = adapter
         ivClose.setOnClickListener {
             onBackPressed()
@@ -70,27 +76,39 @@ class DetailActivity : YouTubeBaseActivity() {
 
             })
 
-        tvMore.setOnClickListener{
+        tvMore.setOnClickListener {
             if (tvContent.isExpanded) {
                 tvContent.collapse()
-                tvMore.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                    R.drawable.ic_expand_more, 0)
+                tvMore.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0,
+                    R.drawable.ic_expand_more, 0
+                )
             } else {
                 tvContent.expand()
-                tvMore.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-                    R.drawable.ic_expand_less, 0)
+                tvMore.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0,
+                    R.drawable.ic_expand_less, 0
+                )
             }
         }
+
         Glide.with(this)
             .load((intent.extras?.getSerializable("item") as Movie).imageURL)
             .apply(bitmapTransform(BlurTransformation(10, 1)))
             .into(ivBackground)
 
+        btBuyTicket.setOnClickListener {
+            val intent = Intent(this, TicketActivity::class.java)
+            intent.putExtra("item", movie as Serializable)
+            startActivity(intent)
+        }
     }
 
     private fun setWindowFlag(bit: Int, on: Boolean) {
         val win = window
+
         val winParams = win.attributes
+
         if (on) {
             winParams.flags = winParams.flags or bit
         } else {

@@ -16,14 +16,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
-import com.example.cgv.*
+import com.example.cgv.R
 import com.example.cgv.model.HomeInfo
 import com.example.cgv.model.Movie
 import com.example.cgv.model.Resource
 import com.example.cgv.ui.detail.DetailActivity
 import com.example.cgv.ui.history.HistoryTransactionActivity
 import com.example.cgv.ui.login.LogInActivity
+import com.example.cgv.ui.schedule.SchedulerByMovie
+import com.example.cgv.ui.schedule.TicketByTheater
 import com.example.cgv.ui.signup.SignUpActivity
+import com.example.cgv.ui.ticket.TicketActivity
 import com.example.cgv.viewmodel.HomeViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,18 +34,28 @@ import java.io.Serializable
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var adapter: MovieAdapter
-    lateinit var animation: Animation
-    lateinit var viewModel: HomeViewModel
+    private lateinit var adapter: MovieAdapter
+
+    private lateinit var animation: Animation
+
+    private lateinit var viewModel: HomeViewModel
+
     private var listNowMovie = MutableLiveData<List<Movie>>()
+
     private var listSoonMovie = MutableLiveData<List<Movie>>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
         initView()
+
         addListener()
+
         fetchData()
+
         viewModel.getHomeInfo()
     }
 
@@ -64,10 +77,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
+
         listNowMovie.observe(this, object : Observer<List<Movie>> {
             override fun onChanged(t: List<Movie>?) {
                 if (tlHome.selectedTabPosition == 0) {
                     t?.apply {
+                        cacheMovieNow.addAll(this)
                         adapter.setData(this)
                     }
                     vpHome.currentItem = 1000 / 2
@@ -75,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
         listSoonMovie.observe(this, object : Observer<List<Movie>> {
             override fun onChanged(t: List<Movie>?) {
                 if (tlHome.selectedTabPosition == 1) {
@@ -106,12 +122,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMovie.setOnClickListener {
-            val intent = Intent(this, TicketByMovie::class.java)
+            btnTheater.isEnabled = false
+            btnMovie.isEnabled = false
+            val intent = Intent(this, SchedulerByMovie::class.java)
+            intent.putExtra("item", cacheMovieNow as Serializable)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
 
         btnTheater.setOnClickListener {
+            btnTheater.isEnabled = false
+            btnMovie.isEnabled = false
             val intent = Intent(this, TicketByTheater::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
 
@@ -148,12 +171,14 @@ class MainActivity : AppCompatActivity() {
                 p0?.let {
                     when (p0.position) {
                         0 -> {
+                            changeInfo(null)
                             listNowMovie.value?.apply {
                                 adapter.setData(this)
                                 vpHome.adapter = adapter
                             }
                         }
                         1 -> {
+                            changeInfo(null)
                             listSoonMovie.value?.apply {
                                 adapter.setData(this)
                                 vpHome.adapter = adapter
@@ -182,6 +207,11 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        btBuyTicket.setOnClickListener {
+            val intent = Intent(this, TicketActivity::class.java)
+            intent.putExtra("item", adapter.getItem(vpHome.currentItem))
+            startActivity(intent)
+        }
     }
 
     private fun initView() {
@@ -196,7 +226,8 @@ class MainActivity : AppCompatActivity() {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false)
             window.statusBarColor = Color.TRANSPARENT
         }
-        animation = AnimationUtils.loadAnimation(applicationContext,
+        animation = AnimationUtils.loadAnimation(
+            applicationContext,
             R.anim.home_animation
         )
     }
@@ -214,13 +245,28 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun changeInfo(movie: Movie?) {
-        movie?.apply {
-            tvName.text = movieName
-            tvTime.text = category + " - " + timeInMinute + " '"
+        movie?.let {
+            tvName.text = it.movieName
+            btnTime.text = it.category + " - " + it.timeInMinute + " '"
+            btBuyTicket.isEnabled = true
+        } ?: kotlin.run {
+            tvName.text = ""
+            btnTime.text = ""
+            btBuyTicket.isEnabled = false
         }
     }
 
     fun animation() {
         ctContent.startAnimation(animation)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        btnTheater.isEnabled = true
+        btnMovie.isEnabled = true
+    }
+
+    companion object {
+        var cacheMovieNow = mutableListOf<Movie>()
     }
 }

@@ -9,8 +9,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.cgv.R
 import kotlinx.android.synthetic.main.layout_item_screenshot.view.*
 
-class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.ScreenshotViewHolder>(){
+class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.ScreenshotViewHolder>() {
     private val items = mutableListOf<String>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScreenshotViewHolder {
         return ScreenshotViewHolder(
             LayoutInflater.from(parent.context)
@@ -18,7 +19,7 @@ class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.ScreenshotViewH
         )
     }
 
-    fun setDatalist(list: List<String>?){
+    fun setDatalist(list: List<String>?) {
         items.clear()
         if (!list.isNullOrEmpty()) {
             items.addAll(list)
@@ -34,9 +35,9 @@ class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.ScreenshotViewH
         holder.bind(items[position])
     }
 
-    inner class ScreenshotViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        private val img =itemView.ivScreenshot
-        fun bind(item :String){
+    inner class ScreenshotViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val img = itemView.ivScreenshot
+        fun bind(item: String) {
             Glide.with(itemView)
                 .load(item)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
