@@ -27,6 +27,7 @@ class TicketActivity : AppCompatActivity() {
 
     private val adapterScheduler = SchedulerAdapter()
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticket)
@@ -104,6 +105,7 @@ class TicketActivity : AppCompatActivity() {
             })
     }
 
+    @SuppressLint("NewApi")
     fun createListDate(nowDay: LocalDateTime): List<LocalDateTime> {
         val list = mutableListOf<LocalDateTime>()
         for (i in 0 until 14) {
@@ -112,7 +114,7 @@ class TicketActivity : AppCompatActivity() {
         return list
     }
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint("DefaultLocale", "NewApi")
     fun convertDateTimeToString(dateTime: LocalDateTime): String {
         return dateTime.dayOfMonth.toString() + " - " + dateTime.monthValue + " - " + dateTime.year
     }
@@ -170,7 +172,7 @@ class DateAdapter : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
             }
         }
 
-        @SuppressLint("DefaultLocale")
+        @SuppressLint("DefaultLocale", "NewApi")
         fun bind(holder: LocalDateTime) {
             if (adapterPosition == 0) {
                 itemView.tvDayNumber.text = holder.dayOfMonth.toString()

@@ -1,5 +1,7 @@
 package com.example.cgv.model
 
+import java.io.Serializable
+
 data class Ticket(
     val date: String,
     val extraInfo: String,
@@ -10,4 +12,4 @@ data class Ticket(
     val ticketID: Long,
     val time: String,
     val totalPrice: Int
-)
+) :Serializable

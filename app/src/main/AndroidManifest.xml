@@ -24,6 +24,7 @@
             android:launchMode="singleInstance"/>
         <activity android:name=".ui.signup.SignUpActivity" />
         <activity android:name=".ui.login.LogInActivity" />
+        <activity android:name=".ui.history.DetailHistoryActivity"/>
         <activity android:name=".ui.history.HistoryTransactionActivity" />
         <activity
             android:name=".ui.home.MainActivity"

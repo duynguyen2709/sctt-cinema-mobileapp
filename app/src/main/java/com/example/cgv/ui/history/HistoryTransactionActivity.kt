@@ -1,8 +1,10 @@
 package com.example.cgv.ui.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +42,9 @@ class HistoryTransactionActivity : BaseActivity<ActivityHistoryTransactionsBindi
     }
 
     private fun clickEvent(item: Ticket?, position:Int?) {
-
+        val intent= Intent(this,DetailHistoryActivity::class.java)
+        intent.putExtra("TICKET",item)
+        startActivity(intent)
     }
 
     fun onClick(v: View?) {

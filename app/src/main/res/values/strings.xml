@@ -24,6 +24,11 @@
     <string name="log_in">LOG IN</string>
     <string name="welcome_back">Welcome Back,</string>
     <string name="booking_code">Booking Code:</string>
+    <string name="booking_code_parameter">Booking Code: &lt;big>&lt;b>%s&lt;/b>&lt;/big></string>
+    <string name="price_parameter">PRICE: &lt;b>%s đ&lt;/b>&lt;/b></string>
+    <string name="date_parameter">DATE:  &lt;b>%s&lt;/b></string>
     <string name="history_transaction">History Transaction</string>
     <string name="manage_all_your_movie_ticket_bookings">Manage all your movie ticket bookings</string>
+    <string name="ticket_detail">Ticket Detail</string>
+    <string name="use_the_booking_code_to_pick_up_your_tickets_before_the_show">Use the booking code to pick up your tickets before the show</string>
 </resources>
