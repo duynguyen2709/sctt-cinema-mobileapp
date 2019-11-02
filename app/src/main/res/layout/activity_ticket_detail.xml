@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ticket"
+            type="com.example.cgv.model.Ticket" />
+
+        <variable
+            name="activity"
+            type="com.example.cgv.ui.history.DetailHistoryActivity" />
+
+        <import type="android.text.Html" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6E4E4">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_back_black"
+            android:onClick="@{activity::onClick}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/normal_text.SemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/sanfrancisco_semi_bold"
+            android:letterSpacing="0.1"
+            android:text="@string/ticket_detail"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivTopBackground"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="72dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/top_background_detail_ticket"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBottomBackground"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="72dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bottom_background_detail_ticket"
+            app:layout_constraintTop_toBottomOf="@id/ivTopBackground" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMovieName"
+            style="@style/normal_text.bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
+            android:text="@{ticket.movieName}"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="@id/ivTopBackground"
+            app:layout_constraintStart_toStartOf="@id/ivTopBackground"
+            app:layout_constraintTop_toTopOf="@id/ivTopBackground"
+            tools:text="The Legend of Tarzan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTicketID"
+            style="@style/normal_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@{Html.fromHtml(String.format(@string/booking_code_parameter, ticket.ticketID))}"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/ivTopBackground"
+            app:layout_constraintStart_toStartOf="@id/ivTopBackground"
+            app:layout_constraintTop_toBottomOf="@id/tvMovieName" />
+
+        <LinearLayout
+            android:id="@+id/lInfoContainer"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gradient_bottom_detail"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/ivTopBackground"
+            app:layout_constraintStart_toStartOf="@id/ivTopBackground"
+            app:layout_constraintTop_toBottomOf="@id/tvTicketID">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRoom"
+                style="@style/normal_text.bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="ROOM\n14"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSeatCode"
+                style="@style/normal_text.bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="ROOM\n14"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{Html.fromHtml(String.format(@string/price_parameter, ticket.totalPrice))}"
+            app:layout_constraintBottom_toBottomOf="@id/ivTopBackground"
+            app:layout_constraintEnd_toEndOf="@id/guideLine1"
+            app:layout_constraintStart_toStartOf="@id/ivTopBackground"
+            app:layout_constraintTop_toBottomOf="@id/lInfoContainer"
+            tools:text="ABCD" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDate"
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{Html.fromHtml(String.format(@string/date_parameter, ticket.date))}"
+            app:layout_constraintBottom_toBottomOf="@id/ivTopBackground"
+            app:layout_constraintEnd_toEndOf="@id/ivTopBackground"
+            app:layout_constraintStart_toStartOf="@id/guideLine1"
+            app:layout_constraintTop_toBottomOf="@id/lInfoContainer"
+            tools:text="ABCD" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivQRCode"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="#000000"
+            android:src="@drawable/ic_back"
+            android:translationZ="3dp"
+            app:layout_constraintBottom_toBottomOf="@id/ivBottomBackground"
+            app:layout_constraintEnd_toEndOf="@id/ivBottomBackground"
+            app:layout_constraintStart_toStartOf="@id/ivBottomBackground"
+            app:layout_constraintTop_toTopOf="@id/ivBottomBackground" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/normal_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:text="@string/use_the_booking_code_to_pick_up_your_tickets_before_the_show"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/ivBottomBackground" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

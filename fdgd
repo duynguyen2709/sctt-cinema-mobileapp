@@ -1,0 +1,56 @@
+[33mcommit 3fd76ac12ea9f01a9710dc435abad7ac1b85825d[m[33m ([m[1;36mHEAD -> [m[1;32missue7[m[33m, [m[1;31morigin/issue7[m[33m)[m
+Author: tim118 <tim@vinova.com.sg>
+Date:   Sat Nov 2 10:25:20 2019 +0700
+
+    #issue7 - Add Detail Ticket Feature
+
+[33mcommit eab51059674d3011e8d37e286c9ddddcceedfa53[m
+Author: tim118 <tim@vinova.com.sg>
+Date:   Sat Nov 2 10:02:13 2019 +0700
+
+    *add feature detail history
+
+[33mcommit fdbe5e77947997f8666eee3b476f02bdceac06aa[m[33m ([m[1;31morigin/issue5[m[33m, [m[1;32missue5[m[33m)[m
+Author: tim118 <tim@vinova.com.sg>
+Date:   Tue Oct 29 17:14:39 2019 +0700
+
+    add swipe to refresh
+
+[33mcommit ef02722b601459b2765cebe37e8ad3ad430ff904[m
+Author: tim118 <tim@vinova.com.sg>
+Date:   Tue Oct 29 17:07:19 2019 +0700
+
+    add feature lisst history transaction screen
+
+[33mcommit 18dec95195ae466ad06428d3c91740da7275bc35[m[33m ([m[1;31morigin/issue3[m[33m, [m[1;32missue3[m[33m)[m
+Author: tim118 <tim@vinova.com.sg>
+Date:   Tue Oct 29 09:39:49 2019 +0700
+
+    add feature login and sign up
+
+[33mcommit 8e295a66d4b5425e880f50412639169ed614a12f[m
+Merge: c2ebafa 42fae11
+Author: duy1998 <43132958+duy1998@users.noreply.github.com>
+Date:   Sat Oct 26 18:25:36 2019 +0700
+
+    Merge pull request #2 from duynguyen2709/issue1
+    
+    Create Home and Detail
+
+[33mcommit 42fae1194fa102de4f95000de1a00a8968494dd6[m[33m ([m[1;31morigin/issue1[m[33m)[m
+Author: duydc <duydc@vng.com.vn>
+Date:   Sat Oct 26 18:21:39 2019 +0700
+
+    Issue #1 - Create Home, Detail, gitignore
+
+[33mcommit c2ebafa91e18fc0cab7b53c24f2da2f3e5f7c1b3[m
+Author: duydc <duydc@vng.com.vn>
+Date:   Sat Oct 26 17:36:41 2019 +0700
+
+    Init git ignore
+
+[33mcommit 629b36c1599fe20d716d640b892df28291c7a170[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Nguyễn Anh Duy <31149300+duynguyen2709@users.noreply.github.com>
+Date:   Fri Oct 25 08:58:51 2019 +0700
+
+    Initial commit
