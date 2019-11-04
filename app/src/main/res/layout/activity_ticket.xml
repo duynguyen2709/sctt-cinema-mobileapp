@@ -33,11 +33,31 @@
         android:background="@color/color_000000"
         android:textColor="@color/color_ffffff"
         android:textSize="20sp"/>
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/schedulerList">
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/schedulerList">
+        </androidx.recyclerview.widget.RecyclerView>
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutLoading"
+            android:background="@color/color_ffffff"
+            android:translationZ="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </ProgressBar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+
 
 </LinearLayout>

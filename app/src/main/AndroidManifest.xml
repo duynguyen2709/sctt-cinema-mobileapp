@@ -6,25 +6,22 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".CoreApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".CoreApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".ui.ticket.TicketActivity"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ui.schedule.TicketByTheater"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ui.schedule.SchedulerByMovie"
-            android:launchMode="singleInstance"/>
+        <activity android:name=".ui.ticket.TicketActivity" />
+        <activity android:name=".ui.schedule.SchedulerByThearter" />
+        <activity android:name=".ui.schedule.SchedulerByMovie" />
         <activity android:name=".ui.signup.SignUpActivity" />
         <activity android:name=".ui.login.LogInActivity" />
-        <activity android:name=".ui.history.DetailHistoryActivity"/>
+        <activity android:name=".ui.history.DetailHistoryActivity" />
         <activity android:name=".ui.history.HistoryTransactionActivity" />
         <activity
             android:name=".ui.home.MainActivity"

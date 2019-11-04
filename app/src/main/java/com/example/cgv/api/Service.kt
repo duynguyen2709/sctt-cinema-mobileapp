@@ -15,9 +15,9 @@ import retrofit2.http.Path
 interface Service {
     @GET("client/public/movies")
     fun getHomeInfo(): Observable<Response<HomeInfo>>
-    @GET("public/theaters")
+    @GET("client/public/theaters")
     fun getListTheater(): Observable<Response<Map<String, List<Theater>>>>
-    @GET("public/showtimes")
+    @GET("client/public/showtimes")
     fun getListShowTimes(
         @Query("type") type: Int,
         @Query("id") id: String,

@@ -20,24 +20,29 @@ import kotlinx.android.synthetic.main.activity_ticketbytheater.*
 import kotlinx.android.synthetic.main.list_item.view.*
 import java.io.Serializable
 
-class TicketByTheater : AppCompatActivity() {
+class SchedulerByThearter : AppCompatActivity() {
     private lateinit var listAdapter: ExpandableListAdapter
 
     private lateinit var viewModel: SchedulerByTheaterViewModel
+
+    private var isEnableClick = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticketbytheater)
         viewModel = ViewModelProviders.of(this).get(SchedulerByTheaterViewModel::class.java)
         toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            finish()
         }
         listAdapter = ExpandableListAdapter(this)
         listAdapter.setClickListener(object : ExpandableListAdapter.ClickListener {
             override fun onClick(item: Theater) {
-                val intent = Intent(this@TicketByTheater, TicketActivity::class.java)
-                intent.putExtra("item", item as Serializable)
-                startActivity(intent)
+                if (isEnableClick) {
+                    val intent = Intent(this@SchedulerByThearter, TicketActivity::class.java)
+                    intent.putExtra("item", item as Serializable)
+                    startActivity(intent)
+                    isEnableClick = false
+                }
             }
 
         })
@@ -46,19 +51,25 @@ class TicketByTheater : AppCompatActivity() {
             Observer<Resource<Map<String, List<Theater>>>> { t ->
                 when (t.status) {
                     Resource.LOADING -> {
-
+                        layoutLoading.visibility = View.VISIBLE
                     }
                     Resource.SUCCESS -> {
+                        layoutLoading.visibility = View.INVISIBLE
                         listAdapter.setListDataHeader(t.data?.keys?.toList())
                         listAdapter.setListDataChild(t.data)
                     }
                     Resource.ERROR -> {
-
+                        layoutLoading.visibility = View.INVISIBLE
                     }
                 }
             })
         lvTheater.setAdapter(listAdapter)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isEnableClick = true
     }
 }
 

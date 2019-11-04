@@ -98,6 +98,7 @@ class DetailActivity : YouTubeBaseActivity() {
             .into(ivBackground)
 
         btBuyTicket.setOnClickListener {
+            btBuyTicket.isEnabled = false
             val intent = Intent(this, TicketActivity::class.java)
             intent.putExtra("item", movie as Serializable)
             startActivity(intent)
@@ -115,5 +116,10 @@ class DetailActivity : YouTubeBaseActivity() {
             winParams.flags = winParams.flags and bit.inv()
         }
         win.attributes = winParams
+    }
+
+    override fun onResume() {
+        super.onResume()
+        btBuyTicket.isEnabled = true
     }
 }
