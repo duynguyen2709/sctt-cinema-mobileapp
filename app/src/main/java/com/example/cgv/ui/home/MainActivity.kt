@@ -24,7 +24,7 @@ import com.example.cgv.ui.detail.DetailActivity
 import com.example.cgv.ui.history.HistoryTransactionActivity
 import com.example.cgv.ui.login.LogInActivity
 import com.example.cgv.ui.schedule.SchedulerByMovie
-import com.example.cgv.ui.schedule.TicketByTheater
+import com.example.cgv.ui.schedule.SchedulerByThearter
 import com.example.cgv.ui.signup.SignUpActivity
 import com.example.cgv.ui.ticket.TicketActivity
 import com.example.cgv.viewmodel.HomeViewModel
@@ -33,7 +33,41 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.Serializable
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
+    override fun onClick(p0: View?) {
+        if (isEnableClick) {
+            when (p0?.id) {
+                R.id.btBuyTicket -> {
+                    val intent = Intent(this, TicketActivity::class.java)
+                    intent.putExtra("item", adapter.getItem(vpHome.currentItem))
+                    startActivity(intent)
+                }
+                R.id.btnHistory -> {
+                    val intent = Intent(this, HistoryTransactionActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.btnLogin -> {
+                    val intent = Intent(this, LogInActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.btnMovie -> {
+                    val intent = Intent(this, SchedulerByMovie::class.java)
+                    intent.putExtra("item", cacheMovieNow as Serializable)
+                    startActivity(intent)
+                }
+                R.id.btnTheater -> {
+                    val intent = Intent(this, SchedulerByThearter::class.java)
+                    startActivity(intent)
+                }
+                R.id.btnSignUp -> {
+                    val intent = Intent(this, SignUpActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            isEnableClick = false
+        }
+    }
+
     private lateinit var adapter: MovieAdapter
 
     private lateinit var animation: Animation
@@ -43,6 +77,8 @@ class MainActivity : AppCompatActivity() {
     private var listNowMovie = MutableLiveData<List<Movie>>()
 
     private var listSoonMovie = MutableLiveData<List<Movie>>()
+
+    private var isEnableClick = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,9 +144,12 @@ class MainActivity : AppCompatActivity() {
         adapter = MovieAdapter()
         adapter.setPagerAdapterListener(object : MovieAdapter.PagerAdapterListener {
             override fun onClick(movie: Movie) {
-                val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("item", movie as Serializable)
-                startActivity(intent)
+                if (isEnableClick) {
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra("item", movie as Serializable)
+                    startActivity(intent)
+                    isEnableClick = false
+                }
             }
         })
         vpHome.adapter = adapter
@@ -121,37 +160,16 @@ class MainActivity : AppCompatActivity() {
             layoutDrawer.openDrawer(Gravity.LEFT)
         }
 
-        btnMovie.setOnClickListener {
-            btnTheater.isEnabled = false
-            btnMovie.isEnabled = false
-            val intent = Intent(this, SchedulerByMovie::class.java)
-            intent.putExtra("item", cacheMovieNow as Serializable)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
+        btnMovie.setOnClickListener(this)
 
-        btnTheater.setOnClickListener {
-            btnTheater.isEnabled = false
-            btnMovie.isEnabled = false
-            val intent = Intent(this, TicketByTheater::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
+        btnTheater.setOnClickListener(this)
 
-        btnSignUp.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
-        }
+        btnSignUp.setOnClickListener(this)
 
-        btnLogin.setOnClickListener {
-            val intent = Intent(this, LogInActivity::class.java)
-            startActivity(intent)
-        }
+        btnLogin.setOnClickListener(this)
 
-        btnHistory.setOnClickListener {
-            val intent = Intent(this, HistoryTransactionActivity::class.java)
-            startActivity(intent)
-        }
+        btnHistory.setOnClickListener(this)
+
         layoutDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         changeInfo(adapter.getItem(10000 / 2))
@@ -207,11 +225,8 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        btBuyTicket.setOnClickListener {
-            val intent = Intent(this, TicketActivity::class.java)
-            intent.putExtra("item", adapter.getItem(vpHome.currentItem))
-            startActivity(intent)
-        }
+
+        btBuyTicket.setOnClickListener(this)
     }
 
     private fun initView() {
@@ -262,8 +277,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        btnTheater.isEnabled = true
-        btnMovie.isEnabled = true
+        isEnableClick = true
     }
 
     companion object {

@@ -36,7 +36,7 @@ class TicketActivity : AppCompatActivity() {
         val currentDate = LocalDateTime.now()
         tvDate.text = convertDateTimeToString(currentDate)
         toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            finish()
         }
 
         adapterDate.setData(createListDate(currentDate))
@@ -52,7 +52,8 @@ class TicketActivity : AppCompatActivity() {
                     viewModel.getListShowTimes(
                         THEATER,
                         bundle.theaterId.toString(),
-                        item.year.toString() + item.monthValue.toString() + item.dayOfMonth.toString()
+                        item.year.toString() + item.monthValue.toString() +
+                                if (item.dayOfMonth.toString().length > 1) item.dayOfMonth.toString() else "0" + item.dayOfMonth.toString()
                     )
 
                     tvDate.text = convertDateTimeToString(item)
@@ -63,7 +64,8 @@ class TicketActivity : AppCompatActivity() {
             viewModel.getListShowTimes(
                 THEATER,
                 bundle.theaterId.toString(),
-                currentDate.year.toString() + currentDate.monthValue.toString() + currentDate.dayOfMonth.toString()
+                currentDate.year.toString() + currentDate.monthValue.toString() +
+                        if (currentDate.dayOfMonth.toString().length > 1) currentDate.dayOfMonth.toString() else "0" + currentDate.dayOfMonth.toString()
             )
         }
 
@@ -73,7 +75,8 @@ class TicketActivity : AppCompatActivity() {
                     viewModel.getListShowTimes(
                         MOVIE,
                         bundle.movieID.toString(),
-                        item.year.toString() + item.monthValue.toString() + item.dayOfMonth.toString()
+                        item.year.toString() + item.monthValue.toString() +
+                                if (item.dayOfMonth.toString().length > 1) item.dayOfMonth.toString() else "0" + item.dayOfMonth.toString()
                     )
 
                     tvDate.text = convertDateTimeToString(item)
@@ -85,7 +88,8 @@ class TicketActivity : AppCompatActivity() {
             viewModel.getListShowTimes(
                 MOVIE,
                 bundle.movieID.toString(),
-                currentDate.year.toString() + currentDate.monthValue.toString() + currentDate.dayOfMonth.toString()
+                currentDate.year.toString() + currentDate.monthValue.toString() +
+                        if (currentDate.dayOfMonth.toString().length > 1) currentDate.dayOfMonth.toString() else "0" + currentDate.dayOfMonth.toString()
             )
         }
 
@@ -93,13 +97,14 @@ class TicketActivity : AppCompatActivity() {
             Observer<Resource<ShowTimes>> { t ->
                 when (t.status) {
                     Resource.LOADING -> {
-
+                        layoutLoading.visibility = View.VISIBLE
                     }
                     Resource.SUCCESS -> {
+                        layoutLoading.visibility = View.INVISIBLE
                         adapterScheduler.setData(t.data?.showTimes)
                     }
                     Resource.ERROR -> {
-
+                        layoutLoading.visibility = View.INVISIBLE
                     }
                 }
             })

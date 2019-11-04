@@ -13,15 +13,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.cgv.R
 import com.example.cgv.model.Movie
-import com.example.cgv.model.Theater
 import com.example.cgv.ui.ticket.TicketActivity
 import kotlinx.android.synthetic.main.activity_ticketbymovie.*
-import kotlinx.android.synthetic.main.layout_item_date.view.*
 import kotlinx.android.synthetic.main.layout_item_movie.view.*
 import java.io.Serializable
 
 class SchedulerByMovie : AppCompatActivity() {
     private val adapter = SchedulerByMovieAdapter()
+
+    private var isEnableClick = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ticketbymovie)
@@ -30,19 +31,27 @@ class SchedulerByMovie : AppCompatActivity() {
             lvMovie.layoutManager = LinearLayoutManager(this)
             lvMovie.adapter = adapter
             adapter.setData(bundle)
-            adapter.setListener(object : SchedulerByMovieAdapter.ClickListener{
+            adapter.setListener(object : SchedulerByMovieAdapter.ClickListener {
                 override fun onClick(item: Movie) {
-                    val intent = Intent(this@SchedulerByMovie, TicketActivity::class.java)
-                    intent.putExtra("item", item as Serializable)
-                    startActivity(intent)
+                    if (isEnableClick) {
+                        val intent = Intent(this@SchedulerByMovie, TicketActivity::class.java)
+                        intent.putExtra("item", item as Serializable)
+                        startActivity(intent)
+                        isEnableClick = false
+                    }
                 }
 
             })
         }
 
         toolbar.setNavigationOnClickListener {
-            onBackPressed()
+            finish()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isEnableClick = true
     }
 }
 
@@ -75,7 +84,7 @@ class SchedulerByMovieAdapter :
         notifyDataSetChanged()
     }
 
-    fun setListener(listener: ClickListener){
+    fun setListener(listener: ClickListener) {
         this.listener = listener
     }
 
@@ -88,6 +97,7 @@ class SchedulerByMovieAdapter :
                 notifyDataSetChanged()
             }
         }
+
         @SuppressLint("SetTextI18n")
         fun bind(item: Movie) {
             Glide.with(itemView.context)
