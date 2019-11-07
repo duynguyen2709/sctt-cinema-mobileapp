@@ -1,11 +1,13 @@
 package com.example.cgv.ui.ticket
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,11 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cgv.R
 import com.example.cgv.model.*
+import com.example.cgv.ui.room.RoomActivity
+import com.example.cgv.ui.schedule.SchedulerByMovieAdapter
 import kotlinx.android.synthetic.main.activity_ticket.*
 import kotlinx.android.synthetic.main.layout_item_date.view.*
 import kotlinx.android.synthetic.main.layout_item_detail_scheduler.view.*
 import kotlinx.android.synthetic.main.layout_item_scheduler.view.*
 import kotlinx.android.synthetic.main.layout_item_showtime.view.*
+import java.io.Serializable
 import java.time.LocalDateTime
 
 class TicketActivity : AppCompatActivity() {
@@ -102,6 +107,14 @@ class TicketActivity : AppCompatActivity() {
                     Resource.SUCCESS -> {
                         layoutLoading.visibility = View.INVISIBLE
                         adapterScheduler.setData(t.data?.showTimes)
+                        adapterScheduler.setListener(object :SchedulerAdapter.ClickListener{
+                            override fun onClick(item: ShowTime) {
+                                val intent = Intent(this@TicketActivity, RoomActivity::class.java)
+                                intent.putExtra("SHOW_TIME_ID", item.showtimeID)
+                                startActivity(intent)
+                            }
+
+                        })
                     }
                     Resource.ERROR -> {
                         layoutLoading.visibility = View.INVISIBLE
@@ -209,6 +222,8 @@ class SchedulerAdapter : RecyclerView.Adapter<SchedulerAdapter.SchedulerViewHold
 
     private val listValue = mutableListOf<Map<String, List<ShowTime>>>()
 
+    private var listener: ClickListener?=null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulerViewHolder {
         return SchedulerViewHolder(
             LayoutInflater.from(parent.context)
@@ -222,6 +237,10 @@ class SchedulerAdapter : RecyclerView.Adapter<SchedulerAdapter.SchedulerViewHold
 
     override fun onBindViewHolder(holder: SchedulerViewHolder, position: Int) {
         holder.bind(listKey[position], listValue[position])
+    }
+
+    fun setListener(listener: ClickListener){
+        this.listener=listener
     }
 
     fun setData(map: Map<String, Map<String, List<ShowTime>>>?) {
@@ -243,8 +262,18 @@ class SchedulerAdapter : RecyclerView.Adapter<SchedulerAdapter.SchedulerViewHold
             itemView.detailSchedulerList.layoutManager =
                 LinearLayoutManager(itemView.context, RecyclerView.VERTICAL, false)
             itemView.detailSchedulerList.adapter = adapter
+            adapter.setListener(object :DetailSchedulerAdapter.ClickListener{
+                override fun onClick(item: ShowTime) {
+                    listener?.onClick(item)
+                }
+
+            })
             adapter.setData(value)
         }
+    }
+
+    interface ClickListener {
+        fun onClick(item: ShowTime)
     }
 }
 
@@ -255,6 +284,8 @@ class DetailSchedulerAdapter :
     private val listKey = mutableListOf<String>()
 
     private val listValue = mutableListOf<List<ShowTime>>()
+
+    private var listener:ClickListener?=null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailSchedulerViewHolder {
         return DetailSchedulerViewHolder(
@@ -282,21 +313,34 @@ class DetailSchedulerAdapter :
         }
         notifyDataSetChanged()
     }
+    fun setListener(listener:ClickListener){
+        this.listener=listener
+    }
 
     inner class DetailSchedulerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(key: String, value: List<ShowTime>) {
             itemView.tvTypeRoom.text = key
             val adapter = ShowTimeAdapter()
             adapter.setData(value)
+            adapter.setListener(object:ShowTimeAdapter.ClickListener{
+                override fun onClick(item: ShowTime) {
+                    listener?.onClick(item)
+                }
+
+            })
             itemView.showTimesList.layoutManager =
                 LinearLayoutManager(itemView.context, RecyclerView.HORIZONTAL, false)
             itemView.showTimesList.adapter = adapter
         }
     }
+    interface ClickListener {
+        fun onClick(item: ShowTime)
+    }
 }
 
 class ShowTimeAdapter : RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder>() {
     private val items = mutableListOf<ShowTime>()
+    private var listener: ClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowTimeViewHolder {
         return ShowTimeViewHolder(
@@ -312,6 +356,9 @@ class ShowTimeAdapter : RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder>
     override fun onBindViewHolder(holder: ShowTimeViewHolder, position: Int) {
         holder.bind(items[position])
     }
+    fun setListener(listener: ClickListener){
+        this.listener = listener
+    }
 
     fun setData(map: List<ShowTime>) {
         items.clear()
@@ -324,6 +371,12 @@ class ShowTimeAdapter : RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder>
     inner class ShowTimeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: ShowTime) {
             itemView.btnTime.text = item.startTime
+            itemView.btnTime.setOnClickListener {
+                listener?.onClick(item)
+            }
         }
+    }
+    interface ClickListener {
+        fun onClick(item: ShowTime)
     }
 }

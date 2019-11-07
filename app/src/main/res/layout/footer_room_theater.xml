@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/background_form"
+        >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine1"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine3"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.66" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/normal_text.bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_sign_up"
+            android:padding="16dp"
+            android:textSize="12sp"
+            android:text="@string/buy_ticket"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideLine1"
+            app:layout_constraintTop_toBottomOf="@id/guideLine3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSeatNums"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            style="@style/normal_text.SemiBold"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/guideLine3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideLine1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivVipSign"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/background_vip_seat"
+            app:layout_constraintBottom_toBottomOf="@id/guideLine2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="VIP"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideLine2"
+            app:layout_constraintStart_toEndOf="@id/ivVipSign"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNormalSign"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/background_normal_seat"
+            app:layout_constraintBottom_toBottomOf="@id/guideLine3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideLine2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Normal"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideLine3"
+            app:layout_constraintStart_toEndOf="@id/ivNormalSign"
+            app:layout_constraintTop_toTopOf="@id/guideLine2" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivOccupiedSign"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/background_occupied_seat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideLine3" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/normal_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Occupied"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivOccupiedSign"
+            app:layout_constraintTop_toTopOf="@id/guideLine3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
