@@ -94,4 +94,14 @@
         <item name="android:layout_height">0.05dp</item>
         <item name="android:background">@color/line</item>
     </style>
+
+    <style name="toolbar">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FCF6F6</item>
+    </style>
+
+    <style name="tablayout">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
 </resources>

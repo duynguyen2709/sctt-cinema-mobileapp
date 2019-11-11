@@ -40,6 +40,8 @@ class ScreenshotAdapter : RecyclerView.Adapter<ScreenshotAdapter.ScreenshotViewH
         fun bind(item: String) {
             Glide.with(itemView)
                 .load(item)
+                .placeholder(R.drawable.load)
+                .error(R.drawable.error_image)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(img)
         }

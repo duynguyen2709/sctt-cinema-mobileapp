@@ -7,22 +7,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cgv.R
+import com.example.cgv.databinding.ActivityTicketBinding
 import com.example.cgv.model.*
 import com.example.cgv.ui.room.RoomActivity
-import com.example.cgv.ui.schedule.SchedulerByMovieAdapter
 import kotlinx.android.synthetic.main.activity_ticket.*
 import kotlinx.android.synthetic.main.layout_item_date.view.*
 import kotlinx.android.synthetic.main.layout_item_detail_scheduler.view.*
 import kotlinx.android.synthetic.main.layout_item_scheduler.view.*
 import kotlinx.android.synthetic.main.layout_item_showtime.view.*
-import java.io.Serializable
 import java.time.LocalDateTime
 
 class TicketActivity : AppCompatActivity() {
@@ -32,14 +31,26 @@ class TicketActivity : AppCompatActivity() {
 
     private val adapterScheduler = SchedulerAdapter()
 
+    private var isEnableClick: Boolean = true
+
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticket)
+
+        val binding: ActivityTicketBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_ticket
+        )
+
+        binding.flagResult = StateView.Error
+
         val bundle = intent.extras?.getSerializable("item")
+
         viewModel = ViewModelProviders.of(this).get(TicketViewModel::class.java)
+
         val currentDate = LocalDateTime.now()
+
         tvDate.text = convertDateTimeToString(currentDate)
+
         toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -50,6 +61,10 @@ class TicketActivity : AppCompatActivity() {
         schedulerList.adapter = adapterScheduler
         dateList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         dateList.adapter = adapterDate
+
+        layoutSwipe.setOnRefreshListener {
+            viewModel.refreshListShowTimes()
+        }
 
         if (bundle is Theater) {
             adapterDate.setListener(object : DateAdapter.ClickListener {
@@ -102,25 +117,41 @@ class TicketActivity : AppCompatActivity() {
             Observer<Resource<ShowTimes>> { t ->
                 when (t.status) {
                     Resource.LOADING -> {
-                        layoutLoading.visibility = View.VISIBLE
+                        binding.flagResult = StateView.Loading
+                        layoutSwipe.isRefreshing = false
                     }
                     Resource.SUCCESS -> {
-                        layoutLoading.visibility = View.INVISIBLE
-                        adapterScheduler.setData(t.data?.showTimes)
-                        adapterScheduler.setListener(object :SchedulerAdapter.ClickListener{
-                            override fun onClick(item: ShowTime) {
-                                val intent = Intent(this@TicketActivity, RoomActivity::class.java)
-                                intent.putExtra("SHOW_TIME_ID", item.showtimeID)
-                                startActivity(intent)
-                            }
-
-                        })
+                        layoutSwipe.isRefreshing = false
+                        binding.flagResult = StateView.Success
+                        if (t.data?.showTimes.isNullOrEmpty()) {
+                            binding.flagResult = StateView.Empty
+                        } else {
+                            binding.flagResult = StateView.Success
+                            adapterScheduler.setData(t.data?.showTimes)
+                            adapterScheduler.setListener(object : SchedulerAdapter.ClickListener {
+                                override fun onClick(item: ShowTime) {
+                                    if(isEnableClick) {
+                                        isEnableClick = false
+                                        val intent =
+                                            Intent(this@TicketActivity, RoomActivity::class.java)
+                                        intent.putExtra("SHOW_TIME_ID", item.showtimeID)
+                                        startActivity(intent)
+                                    }
+                                }
+                            })
+                        }
                     }
                     Resource.ERROR -> {
-                        layoutLoading.visibility = View.INVISIBLE
+                        layoutSwipe.isRefreshing = false
+                        binding.flagResult = StateView.Error
                     }
                 }
             })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isEnableClick = true
     }
 
     @SuppressLint("NewApi")
@@ -180,13 +211,15 @@ class DateAdapter : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                items[adapterPosition].let { item ->
-                    positionNow = adapterPosition
-                    listener?.onClick(item)
-                    itemView.tvDayNumber.background =
-                        itemView.context.getDrawable(R.drawable.circle_text)
+                if (adapterPosition >= 0) {
+                    items[adapterPosition].let { item ->
+                        positionNow = adapterPosition
+                        listener?.onClick(item)
+                        itemView.tvDayNumber.background =
+                            itemView.context.getDrawable(R.drawable.circle_text)
+                    }
+                    notifyDataSetChanged()
                 }
-                notifyDataSetChanged()
             }
         }
 
@@ -204,7 +237,8 @@ class DateAdapter : RecyclerView.Adapter<DateAdapter.DateViewHolder>() {
                 itemView.tvDayNumber.background =
                     itemView.context.getDrawable(R.drawable.circle_text)
             } else {
-                itemView.tvDayNumber.background = null
+                itemView.tvDayNumber.background =
+                    itemView.context.getDrawable(R.drawable.circle_unselect_text)
             }
 
         }
@@ -222,7 +256,7 @@ class SchedulerAdapter : RecyclerView.Adapter<SchedulerAdapter.SchedulerViewHold
 
     private val listValue = mutableListOf<Map<String, List<ShowTime>>>()
 
-    private var listener: ClickListener?=null
+    private var listener: ClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulerViewHolder {
         return SchedulerViewHolder(
@@ -239,8 +273,8 @@ class SchedulerAdapter : RecyclerView.Adapter<SchedulerAdapter.SchedulerViewHold
         holder.bind(listKey[position], listValue[position])
     }
 
-    fun setListener(listener: ClickListener){
-        this.listener=listener
+    fun setListener(listener: ClickListener) {
+        this.listener = listener
     }
 
     fun setData(map: Map<String, Map<String, List<ShowTime>>>?) {
@@ -262,7 +296,7 @@ class SchedulerAdapter : RecyclerView.Adapter<SchedulerAdapter.SchedulerViewHold
             itemView.detailSchedulerList.layoutManager =
                 LinearLayoutManager(itemView.context, RecyclerView.VERTICAL, false)
             itemView.detailSchedulerList.adapter = adapter
-            adapter.setListener(object :DetailSchedulerAdapter.ClickListener{
+            adapter.setListener(object : DetailSchedulerAdapter.ClickListener {
                 override fun onClick(item: ShowTime) {
                     listener?.onClick(item)
                 }
@@ -285,7 +319,7 @@ class DetailSchedulerAdapter :
 
     private val listValue = mutableListOf<List<ShowTime>>()
 
-    private var listener:ClickListener?=null
+    private var listener: ClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailSchedulerViewHolder {
         return DetailSchedulerViewHolder(
@@ -313,8 +347,9 @@ class DetailSchedulerAdapter :
         }
         notifyDataSetChanged()
     }
-    fun setListener(listener:ClickListener){
-        this.listener=listener
+
+    fun setListener(listener: ClickListener) {
+        this.listener = listener
     }
 
     inner class DetailSchedulerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -322,7 +357,7 @@ class DetailSchedulerAdapter :
             itemView.tvTypeRoom.text = key
             val adapter = ShowTimeAdapter()
             adapter.setData(value)
-            adapter.setListener(object:ShowTimeAdapter.ClickListener{
+            adapter.setListener(object : ShowTimeAdapter.ClickListener {
                 override fun onClick(item: ShowTime) {
                     listener?.onClick(item)
                 }
@@ -333,6 +368,7 @@ class DetailSchedulerAdapter :
             itemView.showTimesList.adapter = adapter
         }
     }
+
     interface ClickListener {
         fun onClick(item: ShowTime)
     }
@@ -340,6 +376,7 @@ class DetailSchedulerAdapter :
 
 class ShowTimeAdapter : RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder>() {
     private val items = mutableListOf<ShowTime>()
+
     private var listener: ClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowTimeViewHolder {
@@ -356,7 +393,8 @@ class ShowTimeAdapter : RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder>
     override fun onBindViewHolder(holder: ShowTimeViewHolder, position: Int) {
         holder.bind(items[position])
     }
-    fun setListener(listener: ClickListener){
+
+    fun setListener(listener: ClickListener) {
         this.listener = listener
     }
 
@@ -376,6 +414,7 @@ class ShowTimeAdapter : RecyclerView.Adapter<ShowTimeAdapter.ShowTimeViewHolder>
             }
         }
     }
+
     interface ClickListener {
         fun onClick(item: ShowTime)
     }

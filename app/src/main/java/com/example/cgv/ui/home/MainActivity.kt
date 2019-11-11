@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 R.id.btnMovie -> {
                     val intent = Intent(this, SchedulerByMovie::class.java)
-                    intent.putExtra("item", cacheMovieNow as Serializable)
+                    intent.putExtra("item", nowMovie as Serializable)
                     startActivity(intent)
                 }
                 R.id.btnTheater -> {
@@ -80,6 +80,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var isEnableClick = true
 
+    private var cachePosition0 = 10000 / 2
+
+    private var cachePosition1 = 10000 / 2
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -100,48 +104,74 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Observer<Resource<HomeInfo>> { t ->
                 when (t?.status) {
                     Resource.SUCCESS -> {
+                        layoutResult.visibility = View.VISIBLE
+                        layoutSwipe.isRefreshing = false
                         t.data?.let {
                             listNowMovie.value = it.currentShowingMovies as MutableList<Movie>
                             listSoonMovie.value = it.comingSoonMovies as MutableList<Movie>
+                            nowMovie.clear()
+                            nowMovie.addAll(it.currentShowingMovies)
+                            nowMovie.addAll(it.comingSoonMovies)
+                        } ?: kotlin.run {
+                            layoutResult.visibility = View.INVISIBLE
                         }
                     }
                     Resource.LOADING -> {
 
                     }
                     Resource.ERROR -> {
-
+                        layoutResult.visibility = View.INVISIBLE
+                        layoutSwipe.isRefreshing = false
+                        listNowMovie.value = mutableListOf()
+                        listSoonMovie.value = mutableListOf()
+                        nowMovie.clear()
                     }
                 }
             })
 
-        listNowMovie.observe(this, object : Observer<List<Movie>> {
-            override fun onChanged(t: List<Movie>?) {
+        listNowMovie.observe(this,
+            Observer<List<Movie>> { t ->
                 if (tlHome.selectedTabPosition == 0) {
                     t?.apply {
-                        cacheMovieNow.addAll(this)
-                        adapter.setData(this)
+                        if (isNotEmpty())
+                            adapter.setData(this)
+                        else
+                            layoutResult.visibility = View.INVISIBLE
+                    } ?: kotlin.run {
+                        layoutResult.visibility = View.INVISIBLE
                     }
+
+                    vpHome.adapter = adapter
+
                     vpHome.currentItem = 1000 / 2
+                    cachePosition0 = 1000 / 2
                 }
-            }
+            })
 
-        })
-
-        listSoonMovie.observe(this, object : Observer<List<Movie>> {
-            override fun onChanged(t: List<Movie>?) {
+        listSoonMovie.observe(this,
+            Observer<List<Movie>> { t ->
                 if (tlHome.selectedTabPosition == 1) {
-                    t?.apply {
-                        adapter.setData(this)
+                    t?.let {
+                        if (it.isNotEmpty())
+                            adapter.setData(it)
+                        else
+                            layoutResult.visibility = View.INVISIBLE
+                    } ?: kotlin.run {
+                        layoutResult.visibility = View.INVISIBLE
                     }
+
+                    vpHome.adapter = adapter
+
                     vpHome.currentItem = 1000 / 2
+                    cachePosition1 = 1000 / 2
                 }
-            }
-        })
+            })
     }
 
     @SuppressLint("RtlHardcoded")
     private fun addListener() {
         adapter = MovieAdapter()
+
         adapter.setPagerAdapterListener(object : MovieAdapter.PagerAdapterListener {
             override fun onClick(movie: Movie) {
                 if (isEnableClick) {
@@ -152,9 +182,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         })
+
+        layoutSwipe.setOnRefreshListener {
+            viewModel.getHomeInfo()
+
+            cachePosition0 = 1000 / 2
+
+            cachePosition1 = 1000 / 2
+        }
+
         vpHome.adapter = adapter
 
         vpHome.currentItem = 10000 / 2
+
+        cachePosition0 = 1000 / 2
+
+        cachePosition1 = 1000 / 2
 
         ivDrawer.setOnClickListener {
             layoutDrawer.openDrawer(Gravity.LEFT)
@@ -192,18 +235,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             changeInfo(null)
                             listNowMovie.value?.apply {
                                 adapter.setData(this)
+                                if (isNullOrEmpty())
+                                    layoutResult.visibility = View.INVISIBLE
+                                else
+                                    layoutResult.visibility = View.VISIBLE
                                 vpHome.adapter = adapter
                             }
+                            vpHome.currentItem = cachePosition0
                         }
                         1 -> {
                             changeInfo(null)
                             listSoonMovie.value?.apply {
                                 adapter.setData(this)
+                                if (isNullOrEmpty())
+                                    layoutResult.visibility = View.INVISIBLE
+                                else
+                                    layoutResult.visibility = View.VISIBLE
                                 vpHome.adapter = adapter
                             }
+                            vpHome.currentItem = cachePosition1
                         }
                     }
-                    vpHome.currentItem = 1000 / 2
                 }
             }
         })
@@ -222,6 +274,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             override fun onPageSelected(position: Int) {
                 changeInfo(adapter.getItem(position))
                 animation()
+                if (tlHome.selectedTabPosition == 0)
+                    cachePosition0 = position
+                else cachePosition1 = position
             }
 
         })
@@ -278,9 +333,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         isEnableClick = true
+        if (nowMovie.isNullOrEmpty()) {
+            viewModel.getHomeInfo()
+        }
     }
 
     companion object {
-        var cacheMovieNow = mutableListOf<Movie>()
+        var nowMovie: MutableList<Movie> = mutableListOf()
     }
 }

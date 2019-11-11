@@ -65,6 +65,34 @@ class DetailActivity : YouTubeBaseActivity() {
                         p1!!.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT)
                         //load the video
                         p1.loadVideo(movie.trailerURL)
+
+                        p1.setPlayerStateChangeListener(object :
+                            YouTubePlayer.PlayerStateChangeListener {
+                            override fun onAdStarted() {
+
+                            }
+
+                            override fun onLoading() {
+
+                            }
+
+                            override fun onVideoStarted() {
+                                p1.pause()
+                            }
+
+                            override fun onLoaded(p0: String?) {
+
+                            }
+
+                            override fun onVideoEnded() {
+
+                            }
+
+                            override fun onError(p0: YouTubePlayer.ErrorReason?) {
+
+                            }
+
+                        })
                     }
                 }
 

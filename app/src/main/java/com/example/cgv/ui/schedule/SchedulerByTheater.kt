@@ -4,16 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.cgv.R
+import com.example.cgv.databinding.ActivityTicketbytheaterBinding
 import com.example.cgv.model.Resource
+import com.example.cgv.model.StateView
 import com.example.cgv.model.Theater
 import com.example.cgv.ui.ticket.TicketActivity
 import kotlinx.android.synthetic.main.activity_ticketbytheater.*
@@ -29,12 +33,24 @@ class SchedulerByThearter : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticketbytheater)
+        val binding: ActivityTicketbytheaterBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_ticketbytheater
+        )
+
+        binding.flagResult = StateView.Error
+
         viewModel = ViewModelProviders.of(this).get(SchedulerByTheaterViewModel::class.java)
+
         toolbar.setNavigationOnClickListener {
             finish()
         }
+
+        layoutSwipe.setOnRefreshListener {
+            viewModel.getListTheater()
+        }
+
         listAdapter = ExpandableListAdapter(this)
+
         listAdapter.setClickListener(object : ExpandableListAdapter.ClickListener {
             override fun onClick(item: Theater) {
                 if (isEnableClick) {
@@ -46,25 +62,34 @@ class SchedulerByThearter : AppCompatActivity() {
             }
 
         })
+
         viewModel.listTheater.observe(
             this,
             Observer<Resource<Map<String, List<Theater>>>> { t ->
                 when (t.status) {
                     Resource.LOADING -> {
-                        layoutLoading.visibility = View.VISIBLE
+                        binding.flagResult = StateView.Loading
+                        layoutSwipe.isRefreshing = false
                     }
                     Resource.SUCCESS -> {
-                        layoutLoading.visibility = View.INVISIBLE
-                        listAdapter.setListDataHeader(t.data?.keys?.toList())
-                        listAdapter.setListDataChild(t.data)
+                        layoutSwipe.isRefreshing = false
+
+                        if (t.data.isNullOrEmpty()) {
+                            binding.flagResult = StateView.Empty
+                        } else {
+                            binding.flagResult = StateView.Success
+                            listAdapter.setListDataHeader(t.data.keys.toList())
+                            listAdapter.setListDataChild(t.data)
+                        }
                     }
                     Resource.ERROR -> {
-                        layoutLoading.visibility = View.INVISIBLE
+                        layoutSwipe.isRefreshing = false
+                        binding.flagResult = StateView.Error
                     }
                 }
             })
-        lvTheater.setAdapter(listAdapter)
 
+        lvTheater.setAdapter(listAdapter)
     }
 
     override fun onResume() {
@@ -102,9 +127,10 @@ class ExpandableListAdapter(
             val infalInflater = this._context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = infalInflater.inflate(R.layout.list_item, null)
-            convertView!!.setOnClickListener {
-                clickListener?.onClick(childText)
-            }
+        }
+        convertView!!.setOnClickListener {
+            clickListener?.onClick(childText)
+            Log.d("DUYCHECK", childText.theaterName)
         }
 
         convertView.lblListItem.text = childText.theaterName

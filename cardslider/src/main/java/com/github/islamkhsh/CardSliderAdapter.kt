@@ -11,13 +11,13 @@ import androidx.viewpager.widget.PagerAdapter
 
 abstract class CardSliderAdapter<T> : PagerAdapter() {
 
-    private val items: MutableList<T> =  mutableListOf()
+    private val items: MutableList<T> = mutableListOf()
 
     internal val cards = arrayOfNulls<CardView>(count)
 
-    private lateinit var cardSliderViewPager : CardSliderViewPager
+    private lateinit var cardSliderViewPager: CardSliderViewPager
 
-    internal fun setViewPager(cardSliderViewPager : CardSliderViewPager) {
+    internal fun setViewPager(cardSliderViewPager: CardSliderViewPager) {
         this.cardSliderViewPager = cardSliderViewPager
     }
 
@@ -28,13 +28,17 @@ abstract class CardSliderAdapter<T> : PagerAdapter() {
         cards[position] = null
     }
 
-     fun setData(list: List<T>?){
-         items.clear()
-         if (!list.isNullOrEmpty()) {
-             items.addAll(list)
-         }
-         notifyDataSetChanged()
-     }
+    fun setData(list: List<T>?) {
+        items.clear()
+        if (!list.isNullOrEmpty()) {
+            items.addAll(list)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun getData(): List<T> {
+        return items
+    }
 
     @CallSuper
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -65,19 +69,18 @@ abstract class CardSliderAdapter<T> : PagerAdapter() {
     /**
      * @return Int The total number of pages
      */
-    override fun getCount() = 10000
+    override fun getCount() = MAX_ITEM
 
     /**
      * Call this method to get the item at specific position
      * @param position Int the position of the item
      * @return T? the nullable item of the passed position
      */
-    open fun getItem(position: Int): T?
-    {
-        if (getRealCount() == 0){
+    open fun getItem(position: Int): T? {
+        if (getRealCount() == 0) {
             return null
-        } else{
-            return items[position%getRealCount()]
+        } else {
+            return items[position % getRealCount()]
         }
     }
 
@@ -101,7 +104,7 @@ abstract class CardSliderAdapter<T> : PagerAdapter() {
     @LayoutRes
     abstract fun getItemContentLayout(position: Int): Int
 
-    companion object{
+    companion object {
         const val MAX_ITEM = 10000
     }
 

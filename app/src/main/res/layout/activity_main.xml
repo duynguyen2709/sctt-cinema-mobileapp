@@ -27,28 +27,15 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            style="@style/normal_text.bold.20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
             android:text="@string/movies"
             android:textColor="#FCF6F6"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/ripple"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="5dp"
-            android:src="@drawable/ic_search"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.tabs.TabLayout
@@ -68,98 +55,110 @@
                 android:id="@+id/tiShowing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/normal_text.SemiBold.18sp"
                 android:text="@string/now_showing" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tiComing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/normal_text.SemiBold.18sp"
                 android:text="@string/coming_soon" />
 
         </com.google.android.material.tabs.TabLayout>
 
-        <ScrollView
+        <com.example.cgv.util.SwipeLayoutCustom
+            android:id="@+id/layoutSwipe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tlHome">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <com.github.islamkhsh.CardSliderViewPager
-                    android:id="@+id/vpHome"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardSlider_baseShadow="20dp"
-                    app:cardSlider_cardCornerRadius="10dp"
-                    app:cardSlider_minShadow="5dp"
-                    app:cardSlider_otherPagesWidth="40dp"
-                    app:cardSlider_pageMargin="40dp"
-                    app:cardSlider_smallScaleFactor="0.9"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/ctContent"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="100dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/vpHome">
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layoutResult"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        style="@style/normal_text.SemiBold"
-                        android:textColor="@color/textName"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="BlackPaner" />
+                        android:nestedScrollingEnabled="false">
 
-                    <TextView
-                        android:id="@+id/btnTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/textTime"
-                        style="@style/normal_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvName"
-                        tools:text="Fatasy - 2h" />
+                        <com.github.islamkhsh.CardSliderViewPager
+                            android:id="@+id/vpHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardSlider_baseShadow="20dp"
+                            app:cardSlider_cardCornerRadius="10dp"
+                            app:cardSlider_minShadow="5dp"
+                            app:cardSlider_otherPagesWidth="40dp"
+                            app:cardSlider_pageMargin="40dp"
+                            app:cardSlider_smallScaleFactor="0.9"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <Button
-                        android:id="@+id/btBuyTicket"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="100dp"
-                        android:background="@drawable/button_buy_ticket"
-                        android:paddingStart="30dp"
-                        android:paddingEnd="30dp"
-                        android:text="@string/buy_tickets"
-                        style="@style/normal_text.SemiBold"
-                        android:textColor="@color/textName"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btnTime" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/ctContent"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="100dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/vpHome">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/tvName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center"
+                                android:textColor="@color/textName"
+                                android:textSize="20sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="BlackPaner" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:id="@+id/btnTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_regular"
+                                android:textColor="@color/textTime"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/tvName"
+                                tools:text="Fatasy - 2h" />
 
-        </ScrollView>
+                            <Button
+                                android:id="@+id/btBuyTicket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginBottom="100dp"
+                                android:background="@drawable/button_buy_ticket"
+                                android:fontFamily="@font/roboto_regular"
+                                android:paddingStart="30dp"
+                                android:paddingEnd="30dp"
+                                android:text="@string/buy_tickets"
+                                android:textColor="@color/textName"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/btnTime" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+            </FrameLayout>
+        </com.example.cgv.util.SwipeLayoutCustom>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -181,24 +180,25 @@
             android:id="@+id/btnTheater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Theater"/>
+            android:text="Theater" />
+
         <Button
             android:id="@+id/btnSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SignUp"/>
+            android:text="SignUp" />
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log In"/>
+            android:text="Log In" />
+
         <Button
             android:id="@+id/btnHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="History"/>
-            android:text="Theater" />
+            android:text="History" />
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

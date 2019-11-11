@@ -7,12 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.cgv.R
+import com.example.cgv.databinding.ActivityTicketbymovieBinding
 import com.example.cgv.model.Movie
+import com.example.cgv.model.Resource
+import com.example.cgv.model.StateView
 import com.example.cgv.ui.ticket.TicketActivity
 import kotlinx.android.synthetic.main.activity_ticketbymovie.*
 import kotlinx.android.synthetic.main.layout_item_movie.view.*
@@ -21,31 +28,79 @@ import java.io.Serializable
 class SchedulerByMovie : AppCompatActivity() {
     private val adapter = SchedulerByMovieAdapter()
 
+    private lateinit var viewModel: SchedulerByMovieViewModel
+
+    private var bundle: MutableLiveData<List<Movie>> = MutableLiveData()
+
     private var isEnableClick = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ticketbymovie)
-        val bundle = intent.extras?.getSerializable("item") as List<Movie>
-        if (bundle.isNotEmpty()) {
-            lvMovie.layoutManager = LinearLayoutManager(this)
-            lvMovie.adapter = adapter
-            adapter.setData(bundle)
-            adapter.setListener(object : SchedulerByMovieAdapter.ClickListener {
-                override fun onClick(item: Movie) {
-                    if (isEnableClick) {
-                        val intent = Intent(this@SchedulerByMovie, TicketActivity::class.java)
-                        intent.putExtra("item", item as Serializable)
-                        startActivity(intent)
-                        isEnableClick = false
+        val binding: ActivityTicketbymovieBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_ticketbymovie
+        )
+
+        binding.flagResult = StateView.Error
+
+        viewModel = ViewModelProviders.of(this).get(SchedulerByMovieViewModel::class.java)
+
+        bundle.observe(this, Observer {
+            if (it.isNotEmpty()) {
+                binding.flagResult = StateView.Success
+                lvMovie.layoutManager = LinearLayoutManager(this)
+                lvMovie.adapter = adapter
+                adapter.setData(it)
+                adapter.setListener(object : SchedulerByMovieAdapter.ClickListener {
+                    override fun onClick(item: Movie) {
+                        if (isEnableClick) {
+                            val intent = Intent(this@SchedulerByMovie, TicketActivity::class.java)
+                            intent.putExtra("item", item as Serializable)
+                            startActivity(intent)
+                            isEnableClick = false
+                        }
+                    }
+                })
+            } else {
+                binding.flagResult = StateView.Empty
+            }
+        })
+
+        bundle.value = intent.extras?.getSerializable("item") as List<Movie>
+
+        if (bundle.value.isNullOrEmpty()){
+            viewModel.getHomeInfo()
+        }
+
+        viewModel.homeInfoLiveData.observe(this, Observer { t ->
+            when (t?.status) {
+                Resource.SUCCESS -> {
+                    layoutSwipe.isRefreshing = false
+                    t.data?.let {
+                        val list = mutableListOf<Movie>()
+                        list.addAll(it.currentShowingMovies)
+                        list.addAll(it.comingSoonMovies)
+                        bundle.value = list
+                    } ?: kotlin.run {
+                        binding.flagResult = StateView.Empty
                     }
                 }
-
-            })
-        }
+                Resource.LOADING -> {
+                    binding.flagResult = StateView.Loading
+                    layoutSwipe.isRefreshing = false
+                }
+                Resource.ERROR -> {
+                    binding.flagResult = StateView.Error
+                    layoutSwipe.isRefreshing = false
+                }
+            }
+        })
 
         toolbar.setNavigationOnClickListener {
             finish()
+        }
+
+        layoutSwipe.setOnRefreshListener {
+            viewModel.getHomeInfo()
         }
     }
 
@@ -103,6 +158,8 @@ class SchedulerByMovieAdapter :
             Glide.with(itemView.context)
                 .load(item.imageURL)
                 .override(80, 100)
+                .placeholder(R.drawable.load)
+                .error(R.drawable.ic_error)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(itemView.ivAvatar)
             itemView.tvName.text = item.movieName

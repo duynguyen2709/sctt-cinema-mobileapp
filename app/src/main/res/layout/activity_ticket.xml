@@ -1,65 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.ticket.TicketActivity">
+<layout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.cgv.model.StateView" />
+
+        <variable
+            name="flagResult"
+            type="StateView" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_gradient"
-        app:navigationIcon="@drawable/ic_back"
-        style="@style/normal_text.SemiBold"
-        app:title="Chọn rạp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.ticket.TicketActivity">
 
-    </androidx.appcompat.widget.Toolbar>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dateList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_000000">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/tvDate"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/normal_text"
-        android:background="@color/color_000000"
-        android:textColor="@color/color_ffffff"
-        android:textSize="20sp"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/schedulerList">
+            android:background="@drawable/home_gradient"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Chọn rạp"
+            app:titleTextAppearance="@style/toolbar">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dateList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_000000">
+
         </androidx.recyclerview.widget.RecyclerView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutLoading"
-            android:background="@color/color_ffffff"
-            android:translationZ="2dp"
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_000000"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:textColor="@color/color_ffffff"
+            android:textSize="20sp" />
+
+        <com.example.cgv.util.SwipeLayoutCustom
+            android:id="@+id/layoutSwipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ProgressBar
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </ProgressBar>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/scrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/schedulerList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{flagResult == StateView.Success ? View.VISIBLE : View.INVISIBLE}" />
+                </androidx.core.widget.NestedScrollView>
+
+                <ProgressBar
+                    android:id="@+id/layoutLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="@{flagResult == StateView.Loading ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/layoutEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="200dp"
+                    android:visibility="@{flagResult == StateView.Empty ? View.VISIBLE : View.INVISIBLE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Không có lịch chiếu"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutError"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="200dp"
+                    android:visibility="@{flagResult == StateView.Error ? View.VISIBLE : View.INVISIBLE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Không có kết nối"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+            </FrameLayout>
+        </com.example.cgv.util.SwipeLayoutCustom>
+        >
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

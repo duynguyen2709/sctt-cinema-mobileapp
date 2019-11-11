@@ -24,6 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:fontFamily="@font/roboto_bold"
         android:maxLines="1"
         android:paddingStart="0dp"
         android:paddingEnd="15dp"
@@ -31,9 +32,9 @@
         android:textColor="@color/color_000000"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivAvatar"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="sdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
     <TextView
@@ -41,6 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0.8"
+        android:fontFamily="@font/roboto_medium"
         android:textColor="@color/color_000000"
         app:layout_constraintEnd_toStartOf="@id/ivNext"
         app:layout_constraintStart_toEndOf="@id/ivAvatar"
@@ -52,6 +54,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0.8"
+        android:fontFamily="@font/roboto_medium"
         android:textColor="@color/color_000000"
         app:layout_constraintEnd_toStartOf="@id/ivNext"
         app:layout_constraintStart_toEndOf="@id/ivAvatar"
