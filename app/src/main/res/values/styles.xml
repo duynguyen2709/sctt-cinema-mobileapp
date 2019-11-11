@@ -35,6 +35,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/round_corner_edit_text</item>
     </style>
+
     <style name="normal_text">
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="android:textColor">#000000</item>
@@ -49,5 +50,26 @@
     <style name="normal_text.SemiBold" parent="normal_text">
         <item name="android:fontFamily">@font/montserrat_semi_bold</item>
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="SF_Bold.Size16" parent="normal_text">
+        <item name="android:fontFamily">@font/sanfrancisco_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SF_SemiBold.Size16" parent="normal_text">
+        <item name="android:fontFamily">@font/sanfrancisco_semi_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="SF.Size16" parent="normal_text">
+        <item name="android:fontFamily">@font/sanfrancisco</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0.05dp</item>
+        <item name="android:background">@color/line</item>
     </style>
 </resources>

@@ -44,4 +44,7 @@ interface Service {
             "" + 1 + "|" + System.currentTimeMillis() + "|" + "SCTT"
         )
     ): Observable<Response<SeatMapResponse>>
+
+    @POST("client/private/createticket")
+    fun createTicket(@Body param:CreateTicketParam):Observable<Response<Ticket>>
 }

@@ -12,7 +12,7 @@ import com.example.cgv.model.Seat
 import com.example.cgv.model.StatusSeat
 import com.google.android.youtube.player.internal.s
 
-class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPrice:String) -> Unit)? = null) : RecyclerView.Adapter<SeatAdapter.ItemView>() {
+class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPrice:String,seatCode:String) -> Unit)? = null) : RecyclerView.Adapter<SeatAdapter.ItemView>() {
 
     var listSeat: ArrayList<Seat> = ArrayList()
     private var seatSelectionCount = 0
@@ -26,6 +26,9 @@ class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPric
 
     fun setVIPPrice(VIPPrice:Long){
         this.VIPPrice=VIPPrice
+    }
+    fun getTotalPrice():Long{
+        return totalPrice
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemView {
@@ -52,12 +55,15 @@ class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPric
 
         fun bind(item: Seat) {
             if (item.seatCode != "") {
-                itemView.findViewById<TextView>(R.id.name).text = item.seatCode
                 if (item.status == StatusSeat.AVAILABLE.value) {
+                    itemView.findViewById<TextView>(R.id.name).text = item.seatCode
                     itemView.background = context.getDrawable(R.drawable.background_normal_seat)
                     if (item.seatType == 2) {
                         itemView.background = context.getDrawable(R.drawable.background_vip_seat)
                     }
+                }
+                else{
+                    itemView.background = context.getDrawable(R.drawable.background_occupied_seat)
                 }
             } else {
                 itemView.setBackgroundColor(Color.TRANSPARENT)
@@ -66,7 +72,6 @@ class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPric
                 when(item.status){
                     StatusSeat.AVAILABLE.value->{
                         itemView.background = context.getDrawable(R.drawable.background_selected_seat)
-                        itemView.findViewById<TextView>(R.id.name).text = ""
                         item.status=StatusSeat.RESERVED.value
                         seatSelectionCount++
                         totalPrice += if(item.seatType==1){
@@ -77,10 +82,10 @@ class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPric
                         if (totalPrice != 0.toLong()) {
                             var s = String.format("%,d", totalPrice)
                             s += " đ"
-                            listener?.invoke(seatSelectionCount, s)
+                            listener?.invoke(seatSelectionCount, s,item.seatCode)
                         }
                         else{
-                            listener?.invoke(seatSelectionCount, "")
+                            listener?.invoke(seatSelectionCount, "",item.seatCode)
                         }
                     }
                     StatusSeat.RESERVED.value->{
@@ -88,7 +93,6 @@ class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPric
                         if (item.seatType == 2) {
                             itemView.background = context.getDrawable(R.drawable.background_vip_seat)
                         }
-                        itemView.findViewById<TextView>(R.id.name).text = item.seatCode
                         item.status=StatusSeat.AVAILABLE.value
                         seatSelectionCount--
                         totalPrice -= if(item.seatType==1){
@@ -99,10 +103,10 @@ class SeatAdapter(val context: Context,val listener:((ticketCount:Int, totalPric
                         if (totalPrice != 0.toLong()) {
                             var s = String.format("%,d", totalPrice)
                             s += " đ"
-                            listener?.invoke(seatSelectionCount, s)
+                            listener?.invoke(seatSelectionCount, s,item.seatCode)
                         }
                         else{
-                            listener?.invoke(seatSelectionCount, "")
+                            listener?.invoke(seatSelectionCount, "",item.seatCode)
                         }
 
                     }

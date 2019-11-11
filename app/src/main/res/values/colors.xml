@@ -20,5 +20,10 @@
     <color name="textDayText">@color/color_000000</color>
     <color name="colorStart">#6799d4</color>
     <color name="colorEnd">#4252a0</color>
+    <color name="gray_light">#F8FAFD</color>
+    <color name="line">#E7E7E7</color>
+    <color name="gray_stroke">#D5D5D5</color>
+    <color name="blue">#2B63F0</color>
+    <color name="red">#F44336</color>
 
 </resources>

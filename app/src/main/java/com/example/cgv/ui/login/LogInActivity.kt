@@ -58,7 +58,7 @@ class LogInActivity : BaseActivity<ActivityLogInBinding>() {
                         CoreApplication.instance.saveUser(response.user)
                         CoreApplication.instance.saveToken(response.token)
                         Toast.makeText(this, response.token, Toast.LENGTH_SHORT).show()
-                        finish()
+                        navigateToHomeWithClearBStack()
                     }
                 }
                 Resource.LOADING -> {
