@@ -37,34 +37,56 @@
     </style>
 
     <style name="normal_text">
-        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textColor">#000000</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="normal_text.bold" parent="normal_text">
-        <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="normal_text.bold.24sp" parent="normal_text">
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="normal_text.SemiBold" parent="normal_text">
-        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="normal_text.16sp" parent="normal_text">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="normal_text.24sp" parent="normal_text">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="normal_text.20sp" parent="normal_text">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="SF_Bold.Size16" parent="normal_text">
-        <item name="android:fontFamily">@font/sanfrancisco_bold</item>
+    <style name="normal_text.bold.16sp" parent="normal_text.bold">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="SF_SemiBold.Size16" parent="normal_text">
-        <item name="android:fontFamily">@font/sanfrancisco_semi_bold</item>
+    <style name="normal_text.bold.20sp" parent="normal_text.bold">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="normal_text.SemiBold.11sp" parent="normal_text.SemiBold">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="normal_text.SemiBold.16sp" parent="normal_text.SemiBold">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="SF.Size16" parent="normal_text">
-        <item name="android:fontFamily">@font/sanfrancisco</item>
-        <item name="android:textSize">16sp</item>
+    <style name="normal_text.SemiBold.20sp" parent="normal_text.SemiBold">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="normal_text.SemiBold.18sp" parent="normal_text.SemiBold">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="divider">

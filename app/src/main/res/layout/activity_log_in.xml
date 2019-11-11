@@ -38,13 +38,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/montserrat_regular"
+           style="@style/normal_text.24sp"
             android:padding="16dp"
             android:text="@string/welcome_back"
             android:textAlignment="viewEnd"
             android:textColor="#fff"
-            android:textSize="24sp"
-            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -53,13 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/montserrat_regular"
+            style="@style/normal_text.bold"
             android:padding="16dp"
-            android:text="Log In"
+            android:text="@string/log_in_regular"
             android:textAlignment="viewEnd"
             android:textColor="#fff"
             android:textSize="32sp"
-            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
 
         <RelativeLayout
@@ -85,12 +82,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
+                    style="@style/normal_text.SemiBold.11sp"
                     android:paddingStart="8dp"
                     android:text="@string/email_address"
                     android:textAlignment="viewStart"
-                    android:textColor="#7C7B7B"
-                    android:textSize="11sp" />
+                    android:textColor="#7C7B7B" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtUserName"
@@ -102,12 +98,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
+                    style="@style/normal_text.SemiBold.11sp"
                     android:paddingStart="8dp"
                     android:text="@string/password"
                     android:textAlignment="viewStart"
-                    android:textColor="#7C7B7B"
-                    android:textSize="11sp" />
+                    android:textColor="#7C7B7B" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtPassword"
@@ -125,13 +120,12 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/button_sign_up"
-                    android:fontFamily="@font/montserrat_bold"
+                    style="@style/normal_text.bold.20sp"
                     android:onClick="@{activity::onClick}"
                     android:padding="16dp"
                     android:text="@string/log_in"
                     android:textAllCaps="false"
-                    android:textColor="#fff"
-                    android:textSize="16sp" />
+                    android:textColor="#fff" />
             </LinearLayout>
         </RelativeLayout>
 

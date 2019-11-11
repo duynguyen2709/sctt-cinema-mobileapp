@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center_vertical"
-            style="@style/normal_text.SemiBold"
+            style="@style/normal_text.SemiBold.16sp"
             android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@id/guideLine3"
             app:layout_constraintEnd_toEndOf="parent"

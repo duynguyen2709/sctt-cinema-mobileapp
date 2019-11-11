@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/home_gradient"
         app:navigationIcon="@drawable/ic_back"
+        style="@style/normal_text.SemiBold"
         app:title="Chọn rạp">
 
     </androidx.appcompat.widget.Toolbar>
@@ -30,6 +31,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/normal_text"
         android:background="@color/color_000000"
         android:textColor="@color/color_ffffff"
         android:textSize="20sp"/>

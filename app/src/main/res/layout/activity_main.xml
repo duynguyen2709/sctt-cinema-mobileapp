@@ -27,6 +27,7 @@
 
         <TextView
             android:id="@+id/tvTitle"
+            style="@style/normal_text.bold.20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -67,12 +68,14 @@
                 android:id="@+id/tiShowing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/normal_text.SemiBold.18sp"
                 android:text="@string/now_showing" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tiComing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/normal_text.SemiBold.18sp"
                 android:text="@string/coming_soon" />
 
         </com.google.android.material.tabs.TabLayout>
@@ -117,6 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        style="@style/normal_text.SemiBold"
                         android:textColor="@color/textName"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -129,6 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textTime"
+                        style="@style/normal_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvName"
@@ -144,6 +149,7 @@
                         android:paddingStart="30dp"
                         android:paddingEnd="30dp"
                         android:text="@string/buy_tickets"
+                        style="@style/normal_text.SemiBold"
                         android:textColor="@color/textName"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

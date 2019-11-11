@@ -33,4 +33,5 @@
     <string name="use_the_booking_code_to_pick_up_your_tickets_before_the_show">Use the booking code to pick up your tickets before the show</string>
     <string name="next_step">Next Step</string>
     <string name="buy_ticket">Buy Ticket</string>
+    <string name="log_in_regular">Log in</string>
 </resources>

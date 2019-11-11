@@ -38,7 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/sanfrancisco_semi_bold"
             android:letterSpacing="0.1"
             android:text="@string/ticket_detail"
             android:textAlignment="center"

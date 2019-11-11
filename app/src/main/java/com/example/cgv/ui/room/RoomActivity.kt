@@ -42,7 +42,6 @@ class RoomActivity :BaseActivity<ActivityReserveSeatBinding>() {
     override fun bindView() {
         super.bindView()
         viewBinding.seatMap.layoutManager = GridLayoutManager(this, 10)
-//        viewBinding.seatMap.addItemDecoration(SpacesItemDecoration(10))
         seatMap.adapter = seatAdapter
         viewBinding.footer.btnBuyTicket.setOnClickListener {
             if(CoreApplication.instance.user!=null) {
@@ -115,14 +114,14 @@ class RoomActivity :BaseActivity<ActivityReserveSeatBinding>() {
             right="Ok"
             btnCancel.setOnClickListener(this@RoomActivity::onClick)
             btnOk.setOnClickListener(this@RoomActivity::onClick)
-            title = "Purchasing for:\n" +
+            title = "Purchasing for :\n" +
                     "• Seat: ${seatCodes.toListString()}\n"+
                     "• Cost: $totalPrice"
         }
     }
 
     fun listener(seatCount: Int,price:String,seatCode:String) {
-        viewBinding.footer.tvSeatNums.text = "$seatCount Seat(s)\n$price"
+        viewBinding.footer.tvSeatNums.text = "$seatCount Seat(s)\n\n$price"
         if(seatCount>seatCodes.size){
             seatCodes.add(seatCode)
         }

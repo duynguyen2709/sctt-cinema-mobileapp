@@ -14,9 +14,9 @@
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:id="@+id/ivBack"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:onClick="@{activity::onClick}"
@@ -34,11 +34,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sign_up_title"
+            style="@style/normal_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:fontFamily="@font/montserrat_regular"
             android:padding="16dp"
             android:text="Sign Up"
             android:textAlignment="viewStart"
@@ -55,7 +55,7 @@
             android:layout_below="@id/sign_up_title"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:fontFamily="@font/montserrat_regular"
+            style="@style/normal_text"
             android:padding="16dp"
             android:text="@string/create_an_account_to_access_all_features"
             android:textAlignment="viewStart"
@@ -85,12 +85,12 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
                     android:paddingStart="8dp"
                     android:text="@string/email_address"
                     android:textAlignment="viewStart"
+                    style="@style/normal_text.SemiBold.11sp"
                     android:textColor="#7C7B7B"
-                    android:textSize="11sp" />
+                    />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtUserName"
@@ -102,12 +102,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
                     android:paddingStart="8dp"
                     android:text="@string/password"
+                    style="@style/normal_text.SemiBold.11sp"
                     android:textAlignment="viewStart"
-                    android:textColor="#7C7B7B"
-                    android:textSize="11sp" />
+                    android:textColor="#7C7B7B" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtPassword"
@@ -119,12 +118,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
                     android:paddingStart="8dp"
+                    style="@style/normal_text.SemiBold.11sp"
                     android:text="@string/full_name"
                     android:textAlignment="viewStart"
-                    android:textColor="#7C7B7B"
-                    android:textSize="11sp" />
+                    android:textColor="#7C7B7B" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtFullName"
@@ -136,12 +134,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
                     android:paddingStart="8dp"
+                    style="@style/normal_text.SemiBold.11sp"
                     android:text="@string/phone_number"
                     android:textAlignment="viewStart"
-                    android:textColor="#7C7B7B"
-                    android:textSize="11sp" />
+                    android:textColor="#7C7B7B"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtPhoneNumber"
@@ -159,7 +156,7 @@
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/button_sign_up"
-                    android:fontFamily="@font/montserrat_bold"
+                    style="@style/normal_text.bold"
                     android:onClick="@{activity::onClick}"
                     android:padding="16dp"
                     android:text="@string/create_account"
