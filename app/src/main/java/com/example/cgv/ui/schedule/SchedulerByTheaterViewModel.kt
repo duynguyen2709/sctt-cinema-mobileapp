@@ -16,7 +16,7 @@ class SchedulerByTheaterViewModel : ViewModel() {
         getListTheater()
     }
 
-    private fun getListTheater() {
+    fun getListTheater() {
         listTheater.value = Resource.loading(null, null)
         repository.getListTheater()
     }

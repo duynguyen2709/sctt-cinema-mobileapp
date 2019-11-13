@@ -1,24 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#f4f4f4"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/home_gradient"
-        app:navigationIcon="@drawable/ic_back"
-        app:title="Chọn phim">
+    <data>
 
-    </androidx.appcompat.widget.Toolbar>
+        <import type="android.view.View" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lvMovie"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <import type="com.example.cgv.model.StateView" />
 
-</LinearLayout>
+        <variable
+            name="flagResult"
+            type="StateView" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#f4f4f4"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/home_gradient"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Chọn phim"
+            app:titleTextAppearance="@style/toolbar">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layoutSwipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lvMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{flagResult == StateView.Success ? View.VISIBLE : View.INVISIBLE}" />
+
+                <LinearLayout
+                    android:id="@+id/layoutError"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="200dp"
+                    android:visibility="@{flagResult == StateView.Error ? View.VISIBLE : View.INVISIBLE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Không có kết nối"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="200dp"
+                    android:visibility="@{flagResult == StateView.Empty ? View.VISIBLE : View.INVISIBLE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center"
+                        android:text="Không có phim"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/layoutLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="@{flagResult == StateView.Loading ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </FrameLayout>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</layout>

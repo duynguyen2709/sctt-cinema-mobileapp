@@ -22,7 +22,6 @@
                 android:alpha="1"
                 android:contentDescription="@null"
                 android:scaleType="matrix"
-                android:src="@drawable/avengers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,11 +60,12 @@
 
             <TextView
                 android:id="@+id/tvTitle"
+                style="@style/normal_text.SemiBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Annihilation"
-                style="@style/normal_text.SemiBold"
+                android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
+                android:text="Annihilation"
                 android:textColor="@color/textName"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +76,7 @@
                 android:id="@+id/tvType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Fatasy - 2h"
                 android:textColor="@color/textTime"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,26 +97,28 @@
 
             <at.blogc.android.views.ExpandableTextView
                 android:id="@+id/tvContent"
+                android:paddingTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/youtubeView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:fontFamily="@font/roboto_regular"
                 android:maxLines="3"
-                tools:text=""
                 android:textColor="@color/textTime"
                 android:textSize="15sp"
                 app:animation_duration="750"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/youtubeView">
+                tools:text="">
 
             </at.blogc.android.views.ExpandableTextView>
 
             <TextView
                 android:id="@+id/tvMore"
+                style="@style/normal_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_expand_more"
-                style="@style/normal_text"
                 android:text="Read more"
                 android:textColor="@color/textName"
                 android:textSize="16sp"
@@ -129,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/button_buy_ticket"
+                android:fontFamily="@font/roboto_regular"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
                 android:text="@string/buy_tickets"
@@ -140,26 +144,27 @@
             <TextView
                 android:id="@+id/tvScreenshot"
                 style="@style/normal_text"
-                app:layout_constraintTop_toBottomOf="@id/btBuyTicket"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="30dp"
-                android:text="ScreenShot"
-                android:textSize="20sp"
-                android:textColor="@color/color_ffffff"
-                android:layout_marginStart="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="ScreenShot"
+                android:textColor="@color/color_ffffff"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btBuyTicket">
 
             </TextView>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="25dp"
-                android:clipToPadding="false"
                 android:id="@+id/rvScreenshot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tvScreenshot"
-                app:layout_constraintStart_toStartOf="parent">
+                android:layout_marginTop="25dp"
+                android:clipToPadding="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvScreenshot">
 
             </androidx.recyclerview.widget.RecyclerView>
 
