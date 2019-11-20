@@ -163,43 +163,47 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#000"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:background="#000"-->
+<!--        android:orientation="vertical">-->
 
-        <Button
-            android:id="@+id/btnMovie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Movie" />
+<!--        <Button-->
+<!--            android:id="@+id/btnMovie"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Movie" />-->
 
-        <Button
-            android:id="@+id/btnTheater"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theater" />
+<!--        <Button-->
+<!--            android:id="@+id/btnTheater"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Theater" />-->
 
-        <Button
-            android:id="@+id/btnSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SignUp" />
+<!--        <Button-->
+<!--            android:id="@+id/btnSignUp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="SignUp" />-->
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log In" />
+<!--        <Button-->
+<!--            android:id="@+id/btnLogin"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Log In" />-->
 
-        <Button
-            android:id="@+id/btnHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History" />
-    </LinearLayout>
+<!--        <Button-->
+<!--            android:id="@+id/btnHistory"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="History" />-->
+<!--    </LinearLayout>-->
+
+    <include
+        layout="@layout/layout_drawer_left_main">
+    </include>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

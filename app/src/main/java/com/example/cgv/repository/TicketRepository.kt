@@ -30,9 +30,7 @@ class TicketRepository {
                 }
 
                 override fun onNext(t: Response<ShowTimes>) {
-                    if (t.returnCode == 1) {
-                        showtimeLiveData.value = Resource.success(t.data, null)
-                    }
+                    showtimeLiveData.value = Resource.success(t.data, null)
                 }
 
                 override fun onError(e: Throwable) {
