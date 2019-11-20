@@ -31,9 +31,7 @@ class HomeRepository {
                 }
 
                 override fun onNext(t: Response<HomeInfo>) {
-                    if (t.returnCode == 1) {
-                        homeInfoLiveData.value = Resource.success(t.data, null)
-                    }
+                    homeInfoLiveData.value = Resource.success(t.data, null)
                 }
 
                 override fun onError(e: Throwable) {

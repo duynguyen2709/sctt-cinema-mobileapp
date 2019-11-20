@@ -30,6 +30,7 @@ import com.example.cgv.ui.ticket.TicketActivity
 import com.example.cgv.viewmodel.HomeViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_drawer_left_main.*
 import java.io.Serializable
 
 

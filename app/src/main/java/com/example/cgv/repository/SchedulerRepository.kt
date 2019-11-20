@@ -30,9 +30,7 @@ class SchedulerRepository {
                 }
 
                 override fun onNext(t: Response<Map<String, List<Theater>>>) {
-                    if (t.returnCode == 1) {
-                        theaterLiveData.value = Resource.success(t.data, null)
-                    }
+                    theaterLiveData.value = Resource.success(t.data, null)
                 }
 
                 override fun onError(e: Throwable) {
