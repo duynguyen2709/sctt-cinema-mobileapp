@@ -16,6 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
+import com.example.cgv.CoreApplication
 import com.example.cgv.R
 import com.example.cgv.model.HomeInfo
 import com.example.cgv.model.Movie
@@ -64,6 +65,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val intent = Intent(this, SignUpActivity::class.java)
                     startActivity(intent)
                 }
+                R.id.btnLogOut->{
+                    CoreApplication.instance.clearUser()
+                    onResume()
+                }
             }
             isEnableClick = false
         }
@@ -98,7 +103,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         fetchData()
 
         viewModel.getHomeInfo()
+
+        if(CoreApplication.instance.user!=null){
+            btnSignUp.visibility=View.INVISIBLE
+        }
     }
+
 
     private fun fetchData() {
         viewModel.homeInfoLiveData.observe(this,
@@ -213,6 +223,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnLogin.setOnClickListener(this)
 
         btnHistory.setOnClickListener(this)
+
+        btnLogOut.setOnClickListener(this)
 
         layoutDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
@@ -336,6 +348,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         isEnableClick = true
         if (nowMovie.isNullOrEmpty()) {
             viewModel.getHomeInfo()
+        }
+        if(CoreApplication.instance.user!=null){
+            btnSignUp.visibility=View.GONE
+            btnLogin.visibility=View.GONE
+            btnLogOut.visibility=View.VISIBLE
+            btnHistory.visibility=View.VISIBLE
+        }
+        else{
+            btnSignUp.visibility=View.VISIBLE
+            btnLogin.visibility=View.VISIBLE
+            btnLogOut.visibility=View.GONE
+            btnHistory.visibility=View.GONE
         }
     }
 

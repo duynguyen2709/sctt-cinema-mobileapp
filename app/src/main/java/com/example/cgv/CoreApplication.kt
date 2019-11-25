@@ -61,4 +61,11 @@ open class CoreApplication : Application() {
         ).apply()
         this.token = token
     }
+
+    fun clearUser(){
+        prefsUtil.edit().clear().apply()
+        this.user=null
+        this.token=null
+    }
+
 }

@@ -94,18 +94,39 @@
         android:background="#fff"
         app:layout_constraintTop_toBottomOf="@id/btnMovie" />
 
+
     <TextView
         android:id="@+id/btnHistory"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:drawableTop="@drawable/ic_history"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="Lịch sử"
+        android:text="Lịch sử giao dịch"
         android:textColor="#fff"
-        android:layout_marginStart="30dp"
-        android:textSize="15sp"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+       android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view3" />
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#fff"
+        app:layout_constraintTop_toBottomOf="@id/btnHistory" />
+    <TextView
+        android:id="@+id/btnLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Đăng xuất"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view4" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
