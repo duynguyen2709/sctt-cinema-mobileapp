@@ -57,13 +57,13 @@ class DetailHistoryActivity : BaseActivity<ActivityTicketDetailBindingImpl>() {
         spannable.setSpan(
             tf?.style?.let {
                 StyleSpan(it)
-                AbsoluteSizeSpan(20)
+                AbsoluteSizeSpan(40)
             }, 0, firstWord.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         spannable.setSpan(
             tf1?.style?.let {
                 StyleSpan(it)
-                AbsoluteSizeSpan(35)
+                AbsoluteSizeSpan(55)
             },
             firstWord.length,
             firstWord.length + (secondWord?.length ?: 0),
