@@ -72,7 +72,7 @@ class TicketActivity : AppCompatActivity() {
                     viewModel.getListShowTimes(
                         THEATER,
                         bundle.theaterId.toString(),
-                        item.year.toString() + item.monthValue.toString() +
+                        item.year.toString() +  if (item.monthValue.toString().length > 1) item.monthValue.toString() else "0" + item.monthValue.toString() +
                                 if (item.dayOfMonth.toString().length > 1) item.dayOfMonth.toString() else "0" + item.dayOfMonth.toString()
                     )
 
@@ -84,7 +84,7 @@ class TicketActivity : AppCompatActivity() {
             viewModel.getListShowTimes(
                 THEATER,
                 bundle.theaterId.toString(),
-                currentDate.year.toString() + currentDate.monthValue.toString() +
+                currentDate.year.toString() + if (currentDate.monthValue.toString().length > 1) currentDate.monthValue.toString() else "0" + currentDate.monthValue.toString() +
                         if (currentDate.dayOfMonth.toString().length > 1) currentDate.dayOfMonth.toString() else "0" + currentDate.dayOfMonth.toString()
             )
         }
@@ -95,7 +95,7 @@ class TicketActivity : AppCompatActivity() {
                     viewModel.getListShowTimes(
                         MOVIE,
                         bundle.movieID.toString(),
-                        item.year.toString() + item.monthValue.toString() +
+                        item.year.toString() + if (item.monthValue.toString().length > 1) item.monthValue.toString() else "0" + item.monthValue.toString() +
                                 if (item.dayOfMonth.toString().length > 1) item.dayOfMonth.toString() else "0" + item.dayOfMonth.toString()
                     )
 
@@ -108,7 +108,7 @@ class TicketActivity : AppCompatActivity() {
             viewModel.getListShowTimes(
                 MOVIE,
                 bundle.movieID.toString(),
-                currentDate.year.toString() + currentDate.monthValue.toString() +
+                currentDate.year.toString() + if (currentDate.monthValue.toString().length > 1) currentDate.monthValue.toString() else "0" + currentDate.monthValue.toString() +
                         if (currentDate.dayOfMonth.toString().length > 1) currentDate.dayOfMonth.toString() else "0" + currentDate.dayOfMonth.toString()
             )
         }
